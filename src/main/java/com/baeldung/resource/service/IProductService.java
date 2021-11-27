@@ -2,7 +2,7 @@ package com.baeldung.resource.service;
 
 import com.baeldung.resource.persistence.model.Product;
 
-import java.util.List;
+import com.baeldung.resource.web.dto.ProductDTO;
 import java.util.Optional;
 
 
@@ -10,7 +10,7 @@ public interface IProductService {
 
     Optional<Product> findById(Long id);
 
-    Product save(Product foo);
+    Product save(ProductDTO foo);
 
     Iterable<Product> findAll();
 

@@ -1,6 +1,7 @@
 package com.baeldung.resource.persistence.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Product {
 
     @Id
@@ -32,9 +34,17 @@ public class Product {
 
     private double retailPrice;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_product_category")
     private ProductCategory category;
+
+    @OneToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "id_season")
+    private Season season;
+
+    @OneToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "id_color")
+    private Color color;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_product_measurement")

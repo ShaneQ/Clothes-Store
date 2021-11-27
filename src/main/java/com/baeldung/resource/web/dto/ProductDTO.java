@@ -1,7 +1,9 @@
 package com.baeldung.resource.web.dto;
 
 import com.baeldung.resource.persistence.model.*;
+import com.baeldung.resource.web.controller.ProductMeasurementDTO;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +12,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class ProductDTO {
     private long id;
     private String name;
@@ -18,9 +21,12 @@ public class ProductDTO {
     private String washInfo;
     private String material;
     private String description;
-    private double rentalPrice;
+    private long productCategory;
+    private long season;
+    private long color;
+    private double retailPrice;
     private boolean dryClean;
-    private ProductMeasurement measurement;
+    private ProductMeasurementDTO measurements;
     private ImageDTO imgCover;
     private List<ImageDTO> images;
     private List<SizeDTO> sizes;

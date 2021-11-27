@@ -1,5 +1,7 @@
 package com.baeldung.resource.persistence.model;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +18,7 @@ import javax.persistence.Id;
 public class ProductMeasurement {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Nullable
     @Column(nullable=true)

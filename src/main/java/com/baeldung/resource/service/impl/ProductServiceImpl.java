@@ -3,6 +3,8 @@ package com.baeldung.resource.service.impl;
 import com.baeldung.resource.persistence.model.Product;
 import com.baeldung.resource.persistence.repository.IProductRepository;
 import com.baeldung.resource.service.IProductService;
+import com.baeldung.resource.web.dto.ProductDTO;
+import com.baeldung.resource.web.mappers.ProductDTOMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -22,8 +24,9 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public Product save(Product Product) {
-        return ProductRepository.save(Product);
+    public Product save(ProductDTO productDTO) {
+        Product entity = ProductDTOMapper.toEntity(productDTO);
+        return ProductRepository.save(entity);
     }
 
     @Override
