@@ -46,8 +46,8 @@ public class Product {
     @JoinColumn(name = "id_color")
     private Color color;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_product_measurement")
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
     private ProductMeasurement measurement;
 
     @OneToOne(cascade = CascadeType.ALL)

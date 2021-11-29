@@ -1,8 +1,13 @@
 package com.baeldung.resource.persistence.model;
 
+import java.io.Serializable;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.lang.Nullable;
@@ -15,24 +20,19 @@ import javax.persistence.Id;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductMeasurement {
+@Builder
+public class ProductMeasurement implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_product")
     private Long id;
-    @Nullable
-    @Column(nullable=true)
+
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "id_product")
+    private Product product;
     private Integer length;
-
-    @Column(nullable=true)
-    @Nullable
     private Integer chest;
-
-    @Column(nullable=true)
-    @Nullable
     private Integer hips;
-
-    @Column(nullable=true)
-    @Nullable
     private Integer waist;
 }

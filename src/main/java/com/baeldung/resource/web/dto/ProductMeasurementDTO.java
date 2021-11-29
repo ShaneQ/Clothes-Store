@@ -1,4 +1,4 @@
-package com.baeldung.resource.web.controller;
+package com.baeldung.resource.web.dto;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

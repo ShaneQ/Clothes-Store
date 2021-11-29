@@ -1,7 +1,6 @@
 package com.baeldung.resource.web.dto;
 
 import com.baeldung.resource.persistence.model.*;
-import com.baeldung.resource.web.controller.ProductMeasurementDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
