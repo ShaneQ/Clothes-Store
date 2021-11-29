@@ -9,7 +9,7 @@ spring:
     url: jdbc:mysql://scc.cxnse0qgwvdu.eu-west-1.rds.amazonaws.com:3306
     schemas: resource
     user: admin
-    password: LucidAN21&
+    password: TESTING
     enabled: true
 keycloak:
   auth-server-url: http://ec2-34-242-16-133.eu-west-1.compute.amazonaws.com:8083/auth
