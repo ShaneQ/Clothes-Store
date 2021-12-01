@@ -12,27 +12,43 @@ import java.util.Optional;
 @Service
 public class ProductServiceImpl implements IProductService {
 
-    private IProductRepository ProductRepository;
+    private IProductRepository repository;
 
     public ProductServiceImpl(IProductRepository productRepository) {
-        this.ProductRepository = productRepository;
+        this.repository = productRepository;
     }
 
     @Override
     public Optional<Product> findById(Long id) {
-        return ProductRepository.findById(id);
+        return repository.findById(id);
     }
 
     @Override
     public Product save(ProductDTO productDTO) {
         Product entity = ProductDTOMapper.toEntity(productDTO);
-        return ProductRepository.save(entity);
+        return repository.save(entity);
     }
 
     @Override
     public Iterable<Product> findAll() {
-        return ProductRepository.findAll();
+        return repository.findByDeletedFalse();
     }
 
+    @Override
+    public void toggleHidden(Long id, boolean hidden) {
+        Optional<Product> product = this.repository.findById(id);
+        if(product.isPresent()){
+            product.get().setHidden(hidden);
+            this.repository.save(product.get());
+        }
+    }
 
+    @Override
+    public void delete(long id) {
+        Optional<Product> product = this.repository.findById(id);
+        if(product.isPresent()){
+            product.get().setDeleted(true);
+            this.repository.save(product.get());
+        }
+    }
 }

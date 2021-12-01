@@ -31,13 +31,13 @@ public class ProductDTOMapper {
                 .season(new Season(dto.getSeason(), null))
                 .color(new Color(dto.getColor(), null))
                 .category(new ProductCategory(dto.getProductCategory(), null))
-                .retailPrice(dto.getRetailPrice()).build();
+                .retailPrice(dto.getRetailPrice())
+                .build();
         ProductMeasurement measurement = ProductMeasurement.builder()
                 .chest(dto.getMeasurements().getChest())
                 .hips(dto.getMeasurements().getHips())
                 .length(dto.getMeasurements().getLength())
                 .waist(dto.getMeasurements().getWaist())
-                //.product(product)
                 .build();
         if(dto.getId() == null){
             measurement.setProduct(product);
@@ -85,6 +85,7 @@ public class ProductDTOMapper {
                 .season(entity.getSeason().getId())
                 .productCategory(entity.getCategory().getId())
                 .retailPrice(entity.getRetailPrice())
+                .hidden(entity.isHidden())
                 .build();
         dto.setImages(entity.getImages().stream().map(entityImage -> new ImageDTO(entityImage.getId_image().getId(), entityImage.getId_image().getPath())).collect(
                 Collectors.toList()));

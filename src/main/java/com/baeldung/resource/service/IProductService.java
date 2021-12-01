@@ -14,4 +14,7 @@ public interface IProductService {
 
     Iterable<Product> findAll();
 
+    void toggleHidden(Long id, boolean b);
+
+    void delete(long id);
 }

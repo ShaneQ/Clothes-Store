@@ -25,6 +25,7 @@ public class ProductDTO {
     private long color;
     private double retailPrice;
     private boolean dryClean;
+    private boolean hidden;
     private ProductMeasurementDTO measurements;
     private ImageDTO imgCover;
     private List<ImageDTO> images;

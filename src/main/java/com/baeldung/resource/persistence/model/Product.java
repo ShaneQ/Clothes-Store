@@ -22,6 +22,8 @@ public class Product {
     private String name;
 
     private boolean dryClean;
+    private boolean hidden;
+    private boolean deleted;
 
     private String quickDesc;
 
