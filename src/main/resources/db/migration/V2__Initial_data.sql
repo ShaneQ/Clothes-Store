@@ -52,11 +52,11 @@ INSERT INTO season (id, name) VALUES
 ;
 
 INSERT INTO product_measurement (id_product, length, chest, hips, waist) VALUES
-  (1, 99,100,99,100),
-  (2, 99,100,75,33),
-  (3, 99,0,99,100),
-  (4, 99,64,99,100),
-  (5, 99,100,99,0)
+  (1, '99','100','99','100'),
+  (2, '99','100','75','33'),
+  (3, '99','0','99','100'),
+  (4, '99','64','99','100'),
+  (5, '99','100','99','0')
 ;
 
 INSERT INTO image (id, path) VALUES

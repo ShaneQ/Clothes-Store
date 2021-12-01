@@ -54,8 +54,7 @@ public class Product {
     @JoinColumn(name = "id_cover_img")
     private Image imgCover;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_product")
+    @OneToMany(mappedBy="product", cascade = CascadeType.ALL,  orphanRemoval = true)
     private List<ProductImage> images;
 
     @OneToMany(cascade = CascadeType.ALL)

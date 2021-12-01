@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class ProductDTO {
-    private long id;
+    private Long id;
     private String name;
     private String quickDesc;
     private String fittingInfo;

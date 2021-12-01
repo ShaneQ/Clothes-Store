@@ -15,8 +15,9 @@ public class ProductImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private Long id_product;
+    @ManyToOne
+    @JoinColumn(name="id_product", nullable=false)
+    private Product product;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_image")
     private Image id_image;

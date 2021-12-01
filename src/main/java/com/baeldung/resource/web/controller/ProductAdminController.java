@@ -26,19 +26,20 @@ public class ProductAdminController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public void create(@RequestBody ProductDTO dto) {
+    public Long create(@RequestBody ProductDTO dto) {
         Product savedProduct = this.productService.save(dto);
 
         log.info("Product Created with id:{}", savedProduct.getId());
+        return savedProduct.getId();
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PutMapping
-    public void update(@RequestBody ProductDTO dto) {
+    public Long update(@RequestBody ProductDTO dto) {
         Product savedProduct = this.productService.save(dto);
 
         log.info("Product Updated with id:{}", savedProduct.getId());
+        return savedProduct.getId();
     }
-
 
 }

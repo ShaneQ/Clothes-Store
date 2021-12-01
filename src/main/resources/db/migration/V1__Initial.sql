@@ -37,10 +37,10 @@ CREATE TABLE IF NOT EXISTS  product_size (
 
 CREATE TABLE IF NOT EXISTS  product_measurement (
     ID_PRODUCT INT PRIMARY KEY ,
-    LENGTH INT,
-    HIPS INT,
-    WAIST INT,
-    CHEST INT
+    LENGTH varchar(256) NOT NULL,
+    HIPS varchar(256) NOT NULL,
+    WAIST varchar(256) NOT NULL,
+    CHEST varchar(256) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS  product_image (
