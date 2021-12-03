@@ -2,6 +2,7 @@ package com.baeldung.resource.web.mappers;
 
 import com.baeldung.resource.persistence.model.User;
 import com.baeldung.resource.web.dto.UserDTO;
+import com.baeldung.resource.web.dto.UserDTO.StatusDTO;
 
 public class UserDTOMapper {
 
@@ -35,6 +36,8 @@ public class UserDTOMapper {
                 .eirCode(entity.getEirCode())
                 .addressLineOne(entity.getAddressLineOne())
                 .addressLineTwo(entity.getAddressLineTwo())
+                .status(StatusDTO.valueOf(entity.getStatus().name()))
+                .membership(entity.getMembership())
                 .build();
     }
 }

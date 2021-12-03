@@ -38,6 +38,7 @@ public class User {
     private String eirCode;
     private String addressLineOne;
     private String addressLineTwo;
+    private int membership;
 
     @Enumerated(EnumType.STRING)
     private User.Status status;

@@ -1,5 +1,8 @@
 package com.baeldung.resource.service;
 
+import static com.baeldung.resource.persistence.model.User.Status.ACTIVATED;
+import static com.baeldung.resource.persistence.model.User.Status.REQUESTED;
+
 import com.baeldung.resource.exceptions.ResourceNotFound;
 import com.baeldung.resource.persistence.model.User;
 import com.baeldung.resource.persistence.repository.IUserRepository;
@@ -22,10 +25,14 @@ public class UserService {
 
     public User create(UserDTO dto, String userId) {
         User entity = UserDTOMapper.convertToEntity(dto, userId);
+        entity.setStatus(REQUESTED);
         return repository.save(entity);
     }
     public User update(UserDTO dto, String userId) {
+        User user = get(dto.getId());
         User entity = UserDTOMapper.convertToEntity(dto, userId);
+        entity.setStatus(user.getStatus());
+        entity.setMembership(entity.getMembership());
         return repository.save(entity);
     }
 
@@ -44,6 +51,8 @@ public class UserService {
     public void activateUser(Long id) {
         User user = this.get(id);
         keycloakService.addSCCUserRole(user.getKeycloakUserId());
+        user.setStatus(ACTIVATED);
+        this.repository.save(user);
 
     }
 }
