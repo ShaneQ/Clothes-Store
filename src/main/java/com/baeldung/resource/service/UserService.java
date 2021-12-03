@@ -8,12 +8,16 @@ import com.baeldung.resource.web.mappers.PersonalInfoDTOMapper;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PersonalInfoService {
+public class UserService {
 
     private IPersonalInfoRepository repository;
 
-    public PersonalInfoService(IPersonalInfoRepository repository) {
+    private KeycloakService keycloakService;
+
+    public UserService(IPersonalInfoRepository repository,
+            KeycloakService keycloakService) {
         this.repository = repository;
+        this.keycloakService = keycloakService;
     }
 
     public PersonalInfo create(PersonalInfoDTO dto, String userId) {
@@ -27,5 +31,19 @@ public class PersonalInfoService {
 
     public PersonalInfo get(String userId) {
         return repository.findByUserId(userId).orElseThrow(() -> new ResourceNotFound("No Personal Info found"));
+    }
+
+    public PersonalInfo get(Long id) {
+        return repository.findById(id).orElseThrow(() -> new ResourceNotFound("No Personal Info found"));
+    }
+
+    public Iterable<PersonalInfo> findAll() {
+        return repository.findAll();
+    }
+
+    public void activateUser(Long id) {
+        PersonalInfo personalInfo = this.get(id);
+        keycloakService.addSCCUserRole(personalInfo.getUserId());
+
     }
 }

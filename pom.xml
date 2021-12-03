@@ -115,6 +115,11 @@
             <artifactId>dozer-spring-boot-starter</artifactId>
             <version>6.2.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-admin-client</artifactId>
+            <version>10.0.0</version>
+        </dependency>
 
 
     </dependencies>

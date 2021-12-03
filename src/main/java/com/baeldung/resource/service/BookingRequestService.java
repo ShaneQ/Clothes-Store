@@ -21,7 +21,11 @@ public class BookingRequestService {
         return repository.save(entity);
     }
 
-    public Iterable<BookingRequest> findAll(String userId) {
+    public Iterable<BookingRequest> findAllByUser(String userId) {
         return repository.findAllByUserId(userId);
+    }
+
+    public Iterable<BookingRequest> findAll() {
+        return repository.findAll();
     }
 }

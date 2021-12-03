@@ -31,8 +31,8 @@ public class ProductMeasurement implements Serializable {
     @MapsId
     @JoinColumn(name = "id_product")
     private Product product;
-    private Integer length;
-    private Integer chest;
-    private Integer hips;
-    private Integer waist;
+    private String length;
+    private String chest;
+    private String hips;
+    private String waist;
 }

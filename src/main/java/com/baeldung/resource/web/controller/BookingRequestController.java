@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping(value = "/api/public/booking")
+@RequestMapping()
 public class BookingRequestController {
 
     private BookingRequestService service;
@@ -31,7 +31,7 @@ public class BookingRequestController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping
+    @PostMapping("/api/public/booking")
     public void create(@RequestBody BookingRequestDTO dto, HttpServletRequest request) {
 
         KeycloakAuthenticationToken principal = (KeycloakAuthenticationToken) request.getUserPrincipal();
@@ -44,11 +44,19 @@ public class BookingRequestController {
         log.info("Booking Created with id:{}", savedEntity.getId());
     }
 
-    @GetMapping
-    public Collection<BookingRequestDTO> findAll(HttpServletRequest request) {
+    @GetMapping("/api/public/booking")
+    public Collection<BookingRequestDTO> findAllForUser(HttpServletRequest request) {
         KeycloakAuthenticationToken principal = (KeycloakAuthenticationToken) request.getUserPrincipal();
         String userId = principal.getAccount().getPrincipal().getName();
-        Iterable<BookingRequest> orders = this.service.findAll(userId);
+        Iterable<BookingRequest> orders = this.service.findAllByUser(userId);
+        List<BookingRequestDTO> dtos = new ArrayList<>();
+        orders.forEach(p -> dtos.add(BookingRequestDTOMapper.convertToDto(p)));
+        return dtos;
+    }
+
+    @GetMapping("/api/private/booking")
+    public Collection<BookingRequestDTO> findAll() {
+        Iterable<BookingRequest> orders = this.service.findAll();
         List<BookingRequestDTO> dtos = new ArrayList<>();
         orders.forEach(p -> dtos.add(BookingRequestDTOMapper.convertToDto(p)));
         return dtos;

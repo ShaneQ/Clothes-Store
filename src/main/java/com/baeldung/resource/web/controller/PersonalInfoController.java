@@ -1,7 +1,7 @@
 package com.baeldung.resource.web.controller;
 
 import com.baeldung.resource.persistence.model.PersonalInfo;
-import com.baeldung.resource.service.PersonalInfoService;
+import com.baeldung.resource.service.UserService;
 import com.baeldung.resource.web.dto.PersonalInfoDTO;
 import com.baeldung.resource.web.mappers.PersonalInfoDTOMapper;
 import javax.servlet.http.HttpServletRequest;
@@ -21,9 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api/public/personal")
 public class PersonalInfoController {
 
-    private PersonalInfoService service;
+    private UserService service;
 
-    public PersonalInfoController(PersonalInfoService service) {
+    public PersonalInfoController(UserService service) {
         this.service = service;
     }
 
@@ -33,7 +33,7 @@ public class PersonalInfoController {
 
         KeycloakAuthenticationToken principal = (KeycloakAuthenticationToken) request.getUserPrincipal();
         String userId = principal.getAccount().getPrincipal().getName();
-
+        log.info("Personal info create for User: {}", userId);
         PersonalInfo savedEntity = this.service.create(dto, userId);
 
         log.info("Personal Info Created with id:{}", savedEntity.getId());
@@ -54,15 +54,13 @@ public class PersonalInfoController {
     @ResponseStatus(HttpStatus.CREATED)
     @GetMapping
     public PersonalInfoDTO get(HttpServletRequest request) {
-
         KeycloakAuthenticationToken principal = (KeycloakAuthenticationToken) request.getUserPrincipal();
         String userId = principal.getAccount().getPrincipal().getName();
+        log.info("Personal info request for User: {}", userId);
 
         PersonalInfo entity = this.service.get(userId);
         log.info("Personal Info Retrieved with id:{}", entity.getId());
 
         return PersonalInfoDTOMapper.convertToDto(entity);
     }
-
-
 }

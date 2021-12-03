@@ -16,11 +16,11 @@ import org.springframework.lang.Nullable;
 public class ProductMeasurementDTO {
 
 
-    private Integer length;
+    private String length;
 
-    private Integer chest;
+    private String chest;
 
-    private Integer hips;
+    private String hips;
 
-    private Integer waist;
+    private String waist;
 }

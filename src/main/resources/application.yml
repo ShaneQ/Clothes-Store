@@ -13,3 +13,25 @@ logging:
 spring:
   flyway:
     enabled: false
+---
+
+keycloak-client:
+  server-url: http://localhost:8083/auth
+  username: masterapiuser
+  password: masterapiuser
+  clientId: 276928b9-4218-4443-bec7-956b20a610b0
+  roleId: 23aa99f0-6e9d-46fa-8bbd-51902da41834
+---
+shanes-keycloak:
+  client-id: frontEnd
+  client-secret: 8b78f651-5098-4116-935d-ad2d356ff119
+  scope: openid, profile
+  authorization-grant-type: password
+  host: http://localhost:8083
+
+  authorization-uri: http://localhost:8083/auth/realms/master/protocol/openid-connect/auth
+  user-info-uri: http://localhost:8083/auth/realms/master/protocol/openid-connect/userinfo
+  token-uri: http://localhost:8083/auth/realms/master/protocol/openid-connect/token
+  logout: http://localhost:8083/auth/realms/master/protocol/openid-connect/logout
+  jwk-set-uri: http://localhost:8083/auth/realms/master/protocol/openid-connect/certs
+  certs-id: eRKUXmtLXJ0pA6LAKoZZJ5fU4T8BvlJtDBozWjqEvxc
