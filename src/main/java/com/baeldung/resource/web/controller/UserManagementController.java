@@ -1,9 +1,9 @@
 package com.baeldung.resource.web.controller;
 
-import com.baeldung.resource.persistence.model.PersonalInfo;
+import com.baeldung.resource.persistence.model.User;
 import com.baeldung.resource.service.UserService;
-import com.baeldung.resource.web.dto.PersonalInfoDTO;
-import com.baeldung.resource.web.mappers.PersonalInfoDTOMapper;
+import com.baeldung.resource.web.dto.UserDTO;
+import com.baeldung.resource.web.mappers.UserDTOMapper;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -28,10 +28,10 @@ public class UserManagementController {
     }
 
     @GetMapping()
-    public Collection<PersonalInfoDTO> findAll() {
-        Iterable<PersonalInfo> users = this.service.findAll();
-        List<PersonalInfoDTO> dtos = new ArrayList<>();
-        users.forEach(p -> dtos.add(PersonalInfoDTOMapper.convertToDto(p)));
+    public Collection<UserDTO> findAll() {
+        Iterable<User> users = this.service.findAll();
+        List<UserDTO> dtos = new ArrayList<>();
+        users.forEach(p -> dtos.add(UserDTOMapper.convertToDto(p)));
         return dtos;
     }
 

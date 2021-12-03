@@ -1,14 +1,14 @@
 package com.baeldung.resource.web.mappers;
 
-import com.baeldung.resource.persistence.model.PersonalInfo;
-import com.baeldung.resource.web.dto.PersonalInfoDTO;
+import com.baeldung.resource.persistence.model.User;
+import com.baeldung.resource.web.dto.UserDTO;
 
-public class PersonalInfoDTOMapper {
+public class UserDTOMapper {
 
-    public static PersonalInfo convertToEntity(PersonalInfoDTO dto, String userId) {
-        return PersonalInfo.builder()
+    public static User convertToEntity(UserDTO dto, String userId) {
+        return User.builder()
                 .id(dto.getId())
-                .userId(userId)
+                .keycloakUserId(userId)
                 .firstName(dto.getFirstName())
                 .lastName(dto.getLastName())
                 .email(dto.getEmail())
@@ -22,8 +22,8 @@ public class PersonalInfoDTOMapper {
                 .build();
     }
 
-    public static PersonalInfoDTO convertToDto(PersonalInfo entity) {
-        return PersonalInfoDTO.builder()
+    public static UserDTO convertToDto(User entity) {
+        return UserDTO.builder()
                 .id(entity.getId())
                 .firstName(entity.getFirstName())
                 .lastName(entity.getLastName())
