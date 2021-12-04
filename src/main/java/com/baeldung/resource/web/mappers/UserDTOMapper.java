@@ -20,6 +20,7 @@ public class UserDTOMapper {
                 .eirCode(dto.getEirCode())
                 .addressLineOne(dto.getAddressLineOne())
                 .addressLineTwo(dto.getAddressLineTwo())
+                .membership(dto.getMembership())
                 .build();
     }
 
@@ -38,6 +39,8 @@ public class UserDTOMapper {
                 .addressLineTwo(entity.getAddressLineTwo())
                 .status(StatusDTO.valueOf(entity.getStatus().name()))
                 .membership(entity.getMembership())
+                .startDate(entity.getStartDate())
+                .endDate(entity.getEndDate())
                 .build();
     }
 }

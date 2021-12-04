@@ -8,6 +8,7 @@ import com.baeldung.resource.persistence.model.User;
 import com.baeldung.resource.persistence.repository.IUserRepository;
 import com.baeldung.resource.web.dto.UserDTO;
 import com.baeldung.resource.web.mappers.UserDTOMapper;
+import java.time.LocalDateTime;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -52,6 +53,8 @@ public class UserService {
         User user = this.get(id);
         keycloakService.addSCCUserRole(user.getKeycloakUserId());
         user.setStatus(ACTIVATED);
+        user.setStartDate(LocalDateTime.now());
+        user.setEndDate(LocalDateTime.now().plusMonths(3));
         this.repository.save(user);
 
     }
