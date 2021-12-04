@@ -6,6 +6,7 @@ import static com.baeldung.resource.persistence.model.User.Status.REQUESTED;
 import com.baeldung.resource.exceptions.ResourceNotFound;
 import com.baeldung.resource.persistence.model.User;
 import com.baeldung.resource.persistence.repository.IUserRepository;
+import com.baeldung.resource.web.dto.KeycloakUserInfo;
 import com.baeldung.resource.web.dto.UserDTO;
 import com.baeldung.resource.web.mappers.UserDTOMapper;
 import java.time.LocalDateTime;
@@ -57,5 +58,9 @@ public class UserService {
         user.setEndDate(LocalDateTime.now().plusMonths(3));
         this.repository.save(user);
 
+    }
+
+    public KeycloakUserInfo getKeycloakInfo(String keycloakUserId) {
+        return keycloakService.getUserInfo(keycloakUserId);
     }
 }

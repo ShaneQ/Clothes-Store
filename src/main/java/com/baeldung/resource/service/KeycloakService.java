@@ -1,6 +1,8 @@
 package com.baeldung.resource.service;
 
 import com.baeldung.resource.spring.properties.KeycloakClientProperties;
+import com.baeldung.resource.web.dto.KeycloakUserInfo;
+import com.baeldung.resource.web.mappers.KeycloakDTOMapper;
 import com.nimbusds.jose.shaded.json.JSONArray;
 import com.nimbusds.jose.shaded.json.JSONObject;
 import java.net.URI;
@@ -12,8 +14,10 @@ import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.keycloak.OAuth2Constants;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
+import org.keycloak.admin.client.resource.UserResource;
 import org.keycloak.representations.AccessTokenResponse;
 import org.keycloak.representations.idm.RoleRepresentation;
+import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -84,5 +88,12 @@ public class KeycloakService {
                 ).build();
 
         return keycloak.tokenManager().getAccessToken();
+    }
+
+    public KeycloakUserInfo getUserInfo(String userId) {
+        UserRepresentation userRepresentation = keycloakClient.realm("secondClosetClub").users().get(userId)
+                .toRepresentation();
+
+        return KeycloakDTOMapper.convertToDto(userRepresentation);
     }
 }

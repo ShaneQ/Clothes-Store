@@ -1,18 +1,29 @@
 package com.baeldung.resource.web.controller;
 
-import java.util.Collections;
-import java.util.Map;
+import com.baeldung.resource.service.UserService;
+import com.baeldung.resource.web.dto.KeycloakUserInfo;
 
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.jwt.Jwt;
+import javax.servlet.http.HttpServletRequest;
+import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class UserInfoController {
 
-    @GetMapping("/user/info")
-    public Map<String, Object> getUserInfo(@AuthenticationPrincipal Jwt principal) {
-        return Collections.singletonMap("user_name", principal.getClaimAsString("preferred_username"));
+
+    private UserService service;
+
+    public UserInfoController(UserService service) {
+        this.service = service;
     }
+
+    @GetMapping("/api/public/user/info")
+    public KeycloakUserInfo getUserInfo(HttpServletRequest request) {
+
+        KeycloakAuthenticationToken principal = (KeycloakAuthenticationToken) request.getUserPrincipal();
+        String keycloakUserId = principal.getAccount().getPrincipal().getName();
+        return service.getKeycloakInfo(keycloakUserId);
+    }
+
 }
