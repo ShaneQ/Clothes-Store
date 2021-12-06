@@ -17,3 +17,18 @@ keycloak:
   realm: SecondClosetClub
   resource: frontEnd
   public-client: true
+  ssl-required: none
+  use-resource-role-mappings: true
+  security-constraints[0]:
+    security-collections[0]:
+      name: insecure stuff
+      patterns:
+        - /api/private/product
+  cors: true
+  policy-enforcer-config:
+    lazy-load-paths: true
+    enforcement-mode: PERMISSIVE
+    paths[0]:
+      name: Default Resource
+      path: /api/public/product
+      enforcement-mode: DISABLED

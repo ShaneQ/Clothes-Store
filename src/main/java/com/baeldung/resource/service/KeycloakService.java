@@ -3,8 +3,6 @@ package com.baeldung.resource.service;
 import com.baeldung.resource.spring.properties.KeycloakClientProperties;
 import com.baeldung.resource.web.dto.KeycloakUserInfo;
 import com.baeldung.resource.web.mappers.KeycloakDTOMapper;
-import com.nimbusds.jose.shaded.json.JSONArray;
-import com.nimbusds.jose.shaded.json.JSONObject;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.List;
