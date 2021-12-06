@@ -46,9 +46,9 @@ INSERT INTO color (id, name) VALUES
 
 INSERT INTO season (id, name) VALUES
   (1, 'Winter'),
-  (2, 'Spring'),
-  (3, 'Fall'),
-  (4, 'Summer')
+  (2, 'Summer'),
+  (3, 'Spring & Fall')
+
 ;
 
 INSERT INTO product_measurement (id_product, length, chest, hips, waist) VALUES
@@ -69,8 +69,8 @@ INSERT INTO product (id, name, id_product_category, id_cover_img, id_season, id_
   (1,'Dress', 1,1,1,1,TRUE, 100 ,'Something Nice and Short', 'cotton','something very long', 'Its tight', 'Dryclean only'),
   (2,'Jumper', 2, 1,2,2,FALSE,200,'Something Good','denim','something very long', 'Its loose', 'No spills or i will cut you'),
   (3,'Pants', 5, 1,3,3,TRUE, 300, '','silk', 'something very long', 'It weird', 'you wouldnt believe how much this cost dont hand wash'),
-  (4,'Sweater', 2, 1,4,4, TRUE,400.50,'Cotton', 'Something Else','something very long', 'Its descriptive', 'some other cut and wash info'),
-  (5,'Coat', 4, 1,4, 10, FALSE, 500,'Something Bad','Nylon','something very long','i will make you feel 30','care for it really well');
+  (4,'Sweater', 2, 1,2,3, TRUE,400.50,'Cotton', 'Something Else','something very long', 'Its descriptive', 'some other cut and wash info'),
+  (5,'Coat', 4, 1,3, 10, FALSE, 500,'Something Bad','Nylon','something very long','i will make you feel 30','care for it really well');
 ;
 
 INSERT INTO product_size (id,id_product, id_size) VALUES
