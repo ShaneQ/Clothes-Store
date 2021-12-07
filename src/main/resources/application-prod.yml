@@ -11,9 +11,3 @@ spring:
     user: admin
     password: TESTING
     enabled: true
-keycloak:
-  auth-server-url: http://ec2-34-242-16-133.eu-west-1.compute.amazonaws.com:8083/auth
-  realm: SecondClosetClub
-  resource: frontEnd
-  public-client: true
-  ssl-required: none
