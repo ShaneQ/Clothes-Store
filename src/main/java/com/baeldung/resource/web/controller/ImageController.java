@@ -2,6 +2,7 @@ package com.baeldung.resource.web.controller;
 
 import com.baeldung.resource.persistence.model.Image;
 import com.baeldung.resource.service.imageService;
+import com.baeldung.resource.web.dto.ImageDTO;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,8 +32,8 @@ public class ImageController {
             path = "",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Image> saveTodo(@RequestParam("file") MultipartFile file) {
-        return new ResponseEntity<>(service.saveTodo("TEST", "TEST", file), HttpStatus.OK);
+    public ResponseEntity<ImageDTO> saveTodo(@RequestParam("file") MultipartFile file) {
+        return new ResponseEntity<>(service.saveImage(file), HttpStatus.OK);
     }
 
     @GetMapping(value = "{id}/image/download")

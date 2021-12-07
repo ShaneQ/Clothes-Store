@@ -9,7 +9,9 @@ import com.baeldung.resource.persistence.model.Image;
 import com.baeldung.resource.persistence.repository.IImageRepository;
 import com.baeldung.resource.service.FileStore;
 import com.baeldung.resource.service.imageService;
-import com.baeldung.resource.web.dto.BucketName;
+import com.baeldung.resource.spring.properties.SCCBucketProperties;
+import com.baeldung.resource.web.dto.ImageDTO;
+import com.baeldung.resource.web.mappers.ImageDTOMapper;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,9 +31,8 @@ import org.springframework.web.server.ResponseStatusException;
 public class ImageServiceImpl implements imageService {
     private final FileStore fileStore;
     private final IImageRepository repository;
-
-    @Override
-    public Image saveTodo(String title, String description, MultipartFile file) {
+    private SCCBucketProperties properties;
+    public ImageDTO saveImage(MultipartFile file) {
         //check if the file is empty
         if (file.isEmpty()) {
             throw new IllegalStateException("Cannot upload empty file");
@@ -48,20 +49,22 @@ public class ImageServiceImpl implements imageService {
         metadata.put("Content-Type", file.getContentType());
         metadata.put("Content-Length", String.valueOf(file.getSize()));
         //Save Image in S3 and then save Todo in the database
-        String path = String.format("%s/%s", BucketName.TODO_IMAGE.getBucketName(), UUID.randomUUID());
-        String fileName = String.format("%s", file.getOriginalFilename());
+        UUID s3BucketFolder = UUID.randomUUID();
+        String path = String.format("%s/%s", properties.getName(), s3BucketFolder);
+        String fileName = String.format("%s", file.getOriginalFilename()).replace(" ","");
         try {
             fileStore.upload(path, fileName, Optional.of(metadata), file.getInputStream());
         } catch (IOException e) {
             throw new IllegalStateException("Failed to upload file", e);
         }
         Image todo = Image.builder()
-                .path(path)
+                .path(properties.getUrl()+"/"+s3BucketFolder+"/"+fileName )
                 .fileName(fileName)
                 .build();
         Image save = repository.save(todo);
-        return repository.findById(save.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR));
-
+        Image image = repository.findById(save.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR));
+        return ImageDTOMapper.convertToDto(image);
     }
 
     @Override
