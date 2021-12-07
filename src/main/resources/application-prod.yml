@@ -1,7 +1,7 @@
 spring:
   datasource:
     username: admin
-    password: LucidAN21&
+    password: TESTING
     url: jdbc:mysql://scc.cxnse0qgwvdu.eu-west-1.rds.amazonaws.com:3306/resource
     driver-class-name: com.mysql.cj.jdbc.Driver
 
