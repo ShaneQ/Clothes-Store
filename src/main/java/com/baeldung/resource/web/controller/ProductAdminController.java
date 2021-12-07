@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping(value = "/api/private/product")
+@RequestMapping(value = "/api/admin/product")
 public class ProductAdminController {
 
     private IProductService productService;

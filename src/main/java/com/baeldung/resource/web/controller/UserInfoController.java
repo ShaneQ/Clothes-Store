@@ -3,6 +3,7 @@ package com.baeldung.resource.web.controller;
 import com.baeldung.resource.service.UserService;
 import com.baeldung.resource.web.dto.KeycloakUserInfo;
 
+import java.security.Principal;
 import javax.servlet.http.HttpServletRequest;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,11 +19,10 @@ public class UserInfoController {
         this.service = service;
     }
 
-    @GetMapping("/api/public/user/info")
-    public KeycloakUserInfo getUserInfo(HttpServletRequest request) {
+    @GetMapping("/api/registration/user/info")
+    public KeycloakUserInfo getUserInfo(Principal principal) {
 
-        KeycloakAuthenticationToken principal = (KeycloakAuthenticationToken) request.getUserPrincipal();
-        String keycloakUserId = principal.getAccount().getPrincipal().getName();
+        String keycloakUserId = principal.getName();
         return service.getKeycloakInfo(keycloakUserId);
     }
 

@@ -1,6 +1,7 @@
 package com.baeldung.resource.web.dto;
 
-import static org.apache.commons.lang3.StringUtils.isNotBlank;
+
+import static org.apache.logging.log4j.util.Strings.isNotBlank;
 
 import com.baeldung.resource.persistence.model.Product;
 import java.util.Map;

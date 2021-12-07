@@ -10,7 +10,7 @@ import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 @ConfigurationProperties(prefix = "keycloak-client")
-@PropertySource(value = "classpath:application.yml", factory = YamlPropertySourceFactory.class)
+@PropertySource(value = "classpath:application.properties", factory = YamlPropertySourceFactory.class)
 @Data
 @Builder
 @NoArgsConstructor

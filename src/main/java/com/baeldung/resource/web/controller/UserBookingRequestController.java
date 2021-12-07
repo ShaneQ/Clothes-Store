@@ -5,6 +5,7 @@ import com.baeldung.resource.service.BookingRequestService;
 import com.baeldung.resource.web.dto.BookingRequestDTO;
 import com.baeldung.resource.web.dto.BookingRequestDTO.StatusDTO;
 import com.baeldung.resource.web.mappers.BookingRequestDTOMapper;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -22,20 +23,19 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequestMapping()
-public class BookingRequestController {
+public class UserBookingRequestController {
 
     private BookingRequestService service;
 
-    public BookingRequestController(BookingRequestService bookingRequestService) {
+    public UserBookingRequestController(BookingRequestService bookingRequestService) {
         this.service = bookingRequestService;
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/api/public/booking")
-    public void create(@RequestBody BookingRequestDTO dto, HttpServletRequest request) {
+    @PostMapping("/api/private/booking")
+    public void create(@RequestBody BookingRequestDTO dto, Principal principal) {
 
-        KeycloakAuthenticationToken principal = (KeycloakAuthenticationToken) request.getUserPrincipal();
-        String userId = principal.getAccount().getPrincipal().getName();
+        String userId = principal.getName();
 
         dto.setStatus(StatusDTO.WAITING_COLLECTION);
 
@@ -44,17 +44,17 @@ public class BookingRequestController {
         log.info("Booking Created with id:{}", savedEntity.getId());
     }
 
-    @GetMapping("/api/public/booking")
-    public Collection<BookingRequestDTO> findAllForUser(HttpServletRequest request) {
-        KeycloakAuthenticationToken principal = (KeycloakAuthenticationToken) request.getUserPrincipal();
-        String userId = principal.getAccount().getPrincipal().getName();
+    @GetMapping("/api/private/booking")
+    public Collection<BookingRequestDTO> findAllForUser( Principal principal) {
+
+        String userId = principal.getName();
         Iterable<BookingRequest> orders = this.service.findAllByUser(userId);
         List<BookingRequestDTO> dtos = new ArrayList<>();
         orders.forEach(p -> dtos.add(BookingRequestDTOMapper.convertToDto(p)));
         return dtos;
     }
 
-    @GetMapping("/api/private/booking")
+    @GetMapping("/api/admin/booking")
     public Collection<BookingRequestDTO> findAll() {
         Iterable<BookingRequest> orders = this.service.findAll();
         List<BookingRequestDTO> dtos = new ArrayList<>();

@@ -4,6 +4,7 @@ import com.baeldung.resource.persistence.model.User;
 import com.baeldung.resource.service.UserService;
 import com.baeldung.resource.web.dto.UserDTO;
 import com.baeldung.resource.web.mappers.UserDTOMapper;
+import java.security.Principal;
 import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping(value = "/api/public/personal")
+@RequestMapping(value = "/api")
 public class UserController {
 
     private UserService service;
@@ -28,11 +29,10 @@ public class UserController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping
-    public void create(@RequestBody UserDTO dto, HttpServletRequest request) {
+    @PostMapping("/registration/personal")
+    public void create(@RequestBody UserDTO dto, Principal principal) {
 
-        KeycloakAuthenticationToken principal = (KeycloakAuthenticationToken) request.getUserPrincipal();
-        String userId = principal.getAccount().getPrincipal().getName();
+        String userId = principal.getName();
         log.info("Personal info create for User: {}", userId);
         User savedEntity = this.service.create(dto, userId);
 
@@ -40,11 +40,10 @@ public class UserController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PutMapping("/{id}")
-    public void update(@RequestBody UserDTO dto, HttpServletRequest request) {
+    @PutMapping("/private/personal/{id}")
+    public void update(@RequestBody UserDTO dto, Principal principal) {
 
-        KeycloakAuthenticationToken principal = (KeycloakAuthenticationToken) request.getUserPrincipal();
-        String userId = principal.getAccount().getPrincipal().getName();
+        String userId = principal.getName();
 
         User savedEntity = this.service.update(dto, userId);
 
@@ -52,10 +51,10 @@ public class UserController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @GetMapping
-    public UserDTO get(HttpServletRequest request) {
-        KeycloakAuthenticationToken principal = (KeycloakAuthenticationToken) request.getUserPrincipal();
-        String keycloakUserId = principal.getAccount().getPrincipal().getName();
+    @GetMapping("/private/personal")
+    public UserDTO get( Principal principal) {
+
+        String keycloakUserId = principal.getName();
         log.info("Personal info request for User: {}", keycloakUserId);
 
         User entity = this.service.get(keycloakUserId);
