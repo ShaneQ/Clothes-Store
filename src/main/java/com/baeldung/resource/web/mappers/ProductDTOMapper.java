@@ -52,14 +52,14 @@ public class ProductDTOMapper {
             productSize.setId_product(product.getId());
             productSizes.add(productSize);
         }
-        Image coverImage = new Image(dto.getImgCover().getId(),dto.getImgCover().getUrl());
+        Image coverImage = new Image(dto.getImgCover().getId(),dto.getImgCover().getUrl(),"TEST");
         product.setImgCover(coverImage);
         product.setSizes(productSizes);
         if (dto.getImages() != null) {
             ArrayList<ProductImage> productImages = new ArrayList<>();
             for (ImageDTO imageDTO : dto.getImages()) {
                 ProductImage productImage = new ProductImage();
-                Image image = new Image(imageDTO.getId(), imageDTO.getUrl());
+                Image image = new Image(imageDTO.getId(), imageDTO.getUrl(), "TEST");
                 productImage.setId_image(image);
                 productImage.setProduct(product);
                 productImages.add(productImage);

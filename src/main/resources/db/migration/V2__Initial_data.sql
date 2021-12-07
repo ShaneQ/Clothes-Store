@@ -59,10 +59,10 @@ INSERT INTO product_measurement (id_product, length, chest, hips, waist) VALUES
   (5, '99','100','99','0')
 ;
 
-INSERT INTO image (id, path) VALUES
-  (1,'https://valor-software.com/ngx-bootstrap/assets/images/nature/7.jpg'),
-  (2,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1kUVuAjGZ8a6N1Tz9m0i0zKXVkk0CTJnJslJu6Z3Pk17XqOdSyQ&s'),
-  (3,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1kUVuAjGZ8a6N1Tz9m0i0zKXVkk0CTJnJslJu6Z3Pk17XqOdSyQ&s');
+INSERT INTO image (id, path, file_name) VALUES
+  (1,'https://valor-software.com/ngx-bootstrap/assets/images/nature/7.jpg','TEST'),
+  (2,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1kUVuAjGZ8a6N1Tz9m0i0zKXVkk0CTJnJslJu6Z3Pk17XqOdSyQ&s','TEST'),
+  (3,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1kUVuAjGZ8a6N1Tz9m0i0zKXVkk0CTJnJslJu6Z3Pk17XqOdSyQ&s','TEST');
 ;
 
 INSERT INTO product (id, name, id_product_category, id_cover_img, id_season, id_color, dry_clean, retail_price, quick_desc, material, description, fitting_info, wash_info  ) VALUES

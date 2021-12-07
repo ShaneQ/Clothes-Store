@@ -52,7 +52,8 @@ CREATE TABLE IF NOT EXISTS  product_image (
 
 CREATE TABLE IF NOT EXISTS  image (
     ID INT PRIMARY KEY AUTO_INCREMENT,
-    PATH varchar(1000)
+    PATH varchar(1000),
+    FILE_NAME varchar(1000)
 );
 
 CREATE TABLE IF NOT EXISTS  occasion (

@@ -1,6 +1,7 @@
 package com.baeldung.resource.persistence.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Image {
 
     @Id
@@ -17,5 +19,6 @@ public class Image {
     private Long id;
 
     private String path;
+    private String fileName;
 
 }
