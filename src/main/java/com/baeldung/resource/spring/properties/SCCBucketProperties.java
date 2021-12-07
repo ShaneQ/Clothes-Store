@@ -19,4 +19,7 @@ public class SCCBucketProperties {
 
     private String name;
     private String url;
+    private String region;
+    private String accessKey;
+    private String secretKey;
 }

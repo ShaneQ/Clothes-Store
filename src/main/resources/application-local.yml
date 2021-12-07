@@ -16,3 +16,6 @@ scc:
   bucket:
     name: second-closet-club-images-local
     url: https://second-closet-club-images-local.s3.eu-west-1.amazonaws.com
+    region: eu-west-1
+    accessKey: AKIAVLRFY5LDOYEHXCWV
+    secretKey: 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
