@@ -1,7 +1,7 @@
 spring:
   datasource:
     username: admin
-    password: TESTING
+    password: SomethingLong123!
     url: jdbc:mysql://scc.cxnse0qgwvdu.eu-west-1.rds.amazonaws.com:3306/resource-dani
     driver-class-name: com.mysql.cj.jdbc.Driver
 
@@ -9,7 +9,7 @@ spring:
     url: jdbc:mysql://scc.cxnse0qgwvdu.eu-west-1.rds.amazonaws.com:3306
     schemas: resource-dani
     user: admin
-    password: TESTING
+    password: SomethingLong123!
     enabled: true
 scc:
   bucket:
@@ -18,3 +18,12 @@ scc:
     region: eu-west-1
     accessKey: AKIAVLRFY5LDOYEHXCWV
     secretKey: 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
+
+---
+
+keycloak-client:
+  server-url: http://localhost:8083/auth
+  username: masterapiuser
+  password: masterapiuser
+  clientId: b88ce206-63d6-43b6-87c9-ea09d8c02f32
+  roleId: 9f897986-73e0-46b7-a5f3-5c2a6235b4ce

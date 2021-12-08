@@ -15,14 +15,6 @@ spring:
     enabled: false
 ---
 
-keycloak-client:
-  server-url: http://localhost:8083/auth
-  username: masterapiuser
-  password: masterapiuser
-  clientId: 276928b9-4218-4443-bec7-956b20a610b0
-  roleId: 23aa99f0-6e9d-46fa-8bbd-51902da41834
----
-
 keycloak:
   auth-server-url: http://localhost:8083/auth
   realm: SecondClosetClub

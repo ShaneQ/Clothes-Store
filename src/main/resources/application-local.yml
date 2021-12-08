@@ -19,3 +19,12 @@ scc:
     region: eu-west-1
     accessKey: AKIAVLRFY5LDOYEHXCWV
     secretKey: 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
+
+---
+
+keycloak-client:
+  server-url: http://localhost:8083/auth
+  username: masterapiuser
+  password: masterapiuser
+  clientId: b88ce206-63d6-43b6-87c9-ea09d8c02f32
+  roleId: 9f897986-73e0-46b7-a5f3-5c2a6235b4ce
