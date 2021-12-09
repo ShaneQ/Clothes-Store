@@ -4,7 +4,6 @@ import com.baeldung.resource.persistence.model.Color;
 import com.baeldung.resource.persistence.model.Image;
 import com.baeldung.resource.persistence.model.Product;
 import com.baeldung.resource.persistence.model.ProductCategory;
-import com.baeldung.resource.persistence.model.ProductImage;
 import com.baeldung.resource.persistence.model.ProductMeasurement;
 import com.baeldung.resource.persistence.model.ProductSize;
 import com.baeldung.resource.persistence.model.Season;
@@ -14,6 +13,7 @@ import com.baeldung.resource.web.dto.ImageDTO;
 import com.baeldung.resource.web.dto.ProductDTO;
 import com.baeldung.resource.web.dto.SizeDTO;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class ProductDTOMapper {
@@ -32,6 +32,7 @@ public class ProductDTOMapper {
                 .color(new Color(dto.getColor(), null))
                 .category(new ProductCategory(dto.getProductCategory(), null))
                 .retailPrice(dto.getRetailPrice())
+                .brand(dto.getBrand())
                 .build();
         ProductMeasurement measurement = ProductMeasurement.builder()
                 .chest(dto.getMeasurements().getChest())
@@ -55,7 +56,7 @@ public class ProductDTOMapper {
         Image coverImage = new Image(dto.getImgCover().getId(),dto.getImgCover().getUrl(),"TEST");
         product.setImgCover(coverImage);
         product.setSizes(productSizes);
-        if (dto.getImages() != null) {
+/*        if (dto.getImages() != null) {
             ArrayList<ProductImage> productImages = new ArrayList<>();
             for (ImageDTO imageDTO : dto.getImages()) {
                 ProductImage productImage = new ProductImage();
@@ -63,6 +64,15 @@ public class ProductDTOMapper {
                 productImage.setId_image(image);
                 productImage.setProduct(product);
                 productImages.add(productImage);
+            }
+            product.setImages(productImages);
+        }*/
+        if (dto.getImages() != null) {
+            List<Image> productImages =  new ArrayList<>();
+
+            for (ImageDTO imageDTO : dto.getImages()) {
+                Image image = new Image(imageDTO.getId(), imageDTO.getUrl(), "TEST");
+                productImages.add(image);
             }
             product.setImages(productImages);
         }
@@ -86,8 +96,9 @@ public class ProductDTOMapper {
                 .productCategory(entity.getCategory().getId())
                 .retailPrice(entity.getRetailPrice())
                 .hidden(entity.isHidden())
+                .brand(entity.getBrand())
                 .build();
-        dto.setImages(entity.getImages().stream().map(entityImage -> new ImageDTO(entityImage.getId_image().getId(), entityImage.getId_image().getPath())).collect(
+        dto.setImages(entity.getImages().stream().map(entityImage -> new ImageDTO(entityImage.getId(), entityImage.getPath())).collect(
                 Collectors.toList()));
         dto.setMeasurements(new ProductMeasurementDTO(entity.getMeasurement().getLength(),entity.getMeasurement().getChest(),entity.getMeasurement().getHips(),entity.getMeasurement().getWaist()));
         dto.setSizes(entity.getSizes().stream().map( entitySize -> new SizeDTO(entitySize.getSize().getId(), entitySize.getSize().getName())).collect(Collectors.toList()));

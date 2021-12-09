@@ -26,6 +26,7 @@ public class Product {
     private boolean deleted;
 
     private String quickDesc;
+    private String brand;
 
     private String material;
 
@@ -52,12 +53,14 @@ public class Product {
     @PrimaryKeyJoinColumn
     private ProductMeasurement measurement;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "id_cover_img")
     private Image imgCover;
 
-    @OneToMany(mappedBy="product", cascade = CascadeType.ALL,  orphanRemoval = true)
-    private List<ProductImage> images;
+    @OneToMany(cascade=CascadeType.MERGE)
+    @JoinTable(name="product_image", joinColumns={@JoinColumn(name ="ID_PRODUCT", referencedColumnName ="id")},
+            inverseJoinColumns={@JoinColumn(name ="ID_IMAGE", referencedColumnName ="id")})
+    private List<Image> images;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_product")
