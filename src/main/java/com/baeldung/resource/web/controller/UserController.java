@@ -6,6 +6,7 @@ import com.baeldung.resource.web.dto.UserDTO;
 import com.baeldung.resource.web.mappers.UserDTOMapper;
 import java.security.Principal;
 import javax.servlet.http.HttpServletRequest;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.springframework.http.HttpStatus;
@@ -20,18 +21,13 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequestMapping(value = "/api")
+@AllArgsConstructor
 public class UserController {
 
-    private UserService service;
+    private final UserService service;
 
-    public UserController(UserService service) {
-        this.service = service;
-    }
-
-
-
-    @ResponseStatus(HttpStatus.CREATED)
-    @PutMapping("/private/personal/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("/private/personal/")
     public void update(@RequestBody UserDTO dto, Principal principal) {
 
         String userId = principal.getName();
@@ -41,7 +37,7 @@ public class UserController {
         log.info("Personal Info Updated with id:{}", savedEntity.getId());
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/private/personal")
     public UserDTO get( Principal principal) {
 

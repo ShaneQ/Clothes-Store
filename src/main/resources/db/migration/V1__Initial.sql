@@ -90,8 +90,7 @@ CREATE TABLE IF NOT EXISTS  booking_request(
 );
 
 CREATE TABLE IF NOT EXISTS  user(
-    ID INT PRIMARY KEY AUTO_INCREMENT ,
-    ID_USER_KEYCLOAK varchar (36) NOT NULL UNIQUE ,
+    ID varchar (36) PRIMARY KEY ,
     FIRST_NAME varchar (50) NOT NULL,
     LAST_NAME varchar (50) NOT NULL,
     PHONE varchar (10) NOT NULL,

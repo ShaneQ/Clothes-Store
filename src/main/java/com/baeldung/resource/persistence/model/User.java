@@ -22,11 +22,7 @@ import lombok.NoArgsConstructor;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name = "id_user_keycloak")
-    private String keycloakUserId;
+    private String id;
 
     private String firstName;
     private String lastName;

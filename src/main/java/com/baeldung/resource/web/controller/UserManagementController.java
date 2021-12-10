@@ -36,14 +36,14 @@ public class UserManagementController {
     }
 
     @GetMapping("/user/{id}")
-    public UserDTO find(@PathVariable Long id){
+    public UserDTO find(@PathVariable String id){
         User user = this.service.get(id);
         return UserDTOMapper.convertToDto(user);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/users/user/{userId}")
-    public void activateUser(@PathVariable Long userId) {
+    public void activateUser(@PathVariable String userId) {
         log.info("Admin activated user id: {}", userId);
         this.service.activateUser(userId);
     }

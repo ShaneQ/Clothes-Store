@@ -8,8 +8,7 @@ public class UserDTOMapper {
 
     public static User convertToEntity(UserDTO dto, String userId) {
         return User.builder()
-                .id(dto.getId())
-                .keycloakUserId(userId)
+                .id(userId)
                 .firstName(dto.getFirstName())
                 .lastName(dto.getLastName())
                 .email(dto.getEmail())

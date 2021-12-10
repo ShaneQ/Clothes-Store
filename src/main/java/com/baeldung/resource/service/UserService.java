@@ -10,20 +10,17 @@ import com.baeldung.resource.web.dto.KeycloakUserInfo;
 import com.baeldung.resource.web.dto.UserDTO;
 import com.baeldung.resource.web.mappers.UserDTOMapper;
 import java.time.LocalDateTime;
+import java.util.UUID;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class UserService {
 
     private IUserRepository repository;
 
     private KeycloakService keycloakService;
-
-    public UserService(IUserRepository repository,
-            KeycloakService keycloakService) {
-        this.repository = repository;
-        this.keycloakService = keycloakService;
-    }
 
     public User create(UserDTO dto, String userId) {
         User entity = UserDTOMapper.convertToEntity(dto, userId);
@@ -31,18 +28,14 @@ public class UserService {
         return repository.save(entity);
     }
     public User update(UserDTO dto, String userId) {
-        User user = get(dto.getId());
+        User user = get(userId);
         User entity = UserDTOMapper.convertToEntity(dto, userId);
         entity.setStatus(user.getStatus());
         entity.setMembership(entity.getMembership());
         return repository.save(entity);
     }
 
-    public User get(String keycloakUserId) {
-        return repository.findByKeycloakUserId(keycloakUserId).orElseThrow(() -> new ResourceNotFound("No Personal Info found"));
-    }
-
-    public User get(Long id) {
+    public User get(String id) {
         return repository.findById(id).orElseThrow(() -> new ResourceNotFound("No Personal Info found"));
     }
 
@@ -50,9 +43,9 @@ public class UserService {
         return repository.findAll();
     }
 
-    public void activateUser(Long id) {
+    public void activateUser(String id) {
         User user = this.get(id);
-        keycloakService.addSCCUserRole(user.getKeycloakUserId());
+        keycloakService.addSCCUserRole(user.getId());
         user.setStatus(ACTIVATED);
         user.setStartDate(LocalDateTime.now());
         user.setEndDate(LocalDateTime.now().plusMonths(3));

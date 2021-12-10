@@ -24,6 +24,7 @@ public class BookingRequestDTOMapper {
                 .productId(entity.getId_product().getId())
                 .productSize(entity.getId_productSize())
                 .startDate(entity.getStartDate())
+                .userId(entity.getUserId())
                 .status(StatusDTO.valueOf(entity.getStatus().name()))
                 .coverImg(new ImageDTO(entity.getId_product().getImgCover().getId(), entity.getId_product().getImgCover().getPath()))
                 .collectionPlace(entity.getCollectionPlace())

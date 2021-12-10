@@ -16,6 +16,8 @@ public class BookingRequestDTO {
 
     private Long productId;
 
+    private String userId;
+
     private ImageDTO coverImg;
 
     private Long productSize;
