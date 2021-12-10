@@ -28,16 +28,7 @@ public class UserController {
         this.service = service;
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/registration/personal")
-    public void create(@RequestBody UserDTO dto, Principal principal) {
 
-        String userId = principal.getName();
-        log.info("Personal info create for User: {}", userId);
-        User savedEntity = this.service.create(dto, userId);
-
-        log.info("Personal Info Created with id:{}", savedEntity.getId());
-    }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PutMapping("/private/personal/{id}")
