@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping(value = "/api/admin/users")
+@RequestMapping(value = "/api/admin")
 public class UserManagementController {
 
     private UserService service;
@@ -27,7 +27,7 @@ public class UserManagementController {
         this.service = service;
     }
 
-    @GetMapping()
+    @GetMapping("/users")
     public Collection<UserDTO> findAll() {
         Iterable<User> users = this.service.findAll();
         List<UserDTO> dtos = new ArrayList<>();
@@ -35,8 +35,14 @@ public class UserManagementController {
         return dtos;
     }
 
+    @GetMapping("/user/{id}")
+    public UserDTO find(@PathVariable Long id){
+        User user = this.service.get(id);
+        return UserDTOMapper.convertToDto(user);
+    }
+
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PutMapping("/user/{userId}")
+    @PutMapping("/users/user/{userId}")
     public void activateUser(@PathVariable Long userId) {
         log.info("Admin activated user id: {}", userId);
         this.service.activateUser(userId);
