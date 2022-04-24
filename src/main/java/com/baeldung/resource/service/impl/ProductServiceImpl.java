@@ -64,6 +64,7 @@ public class ProductServiceImpl implements IProductService {
                 .filter(product -> Filters.filterByColor(product, filters))
                 .filter(product -> Filters.filterBySeason(product, filters))
                 .filter(product -> Filters.filterByCategory(product, filters))
+                .filter(product -> Filters.filterByName(product, filters))
                 .collect(Collectors.toList());
     }
 

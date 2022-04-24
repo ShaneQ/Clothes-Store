@@ -4,6 +4,7 @@ package com.baeldung.resource.web.dto;
 import static org.apache.logging.log4j.util.Strings.isNotBlank;
 
 import com.baeldung.resource.persistence.model.Product;
+import java.util.Locale;
 import java.util.Map;
 
 public class Filters {
@@ -12,6 +13,8 @@ public class Filters {
     public static final String FILTER_BY_COLOR = "filterByColor";
     public static final String FILTER_BY_SEASON = "filterBySeason";
     public static final String FILTER_BY_CATEGORY = "filterByCategory";
+    public static final String FILTER_BY_NAME = "filterByName";
+
 
     public static boolean filterBySize(Product product, Map<String, String> filters) {
         boolean result = true;
@@ -41,6 +44,14 @@ public class Filters {
         boolean result = true;
         if (filters.containsKey(FILTER_BY_CATEGORY) && isNotBlank(filters.get(FILTER_BY_CATEGORY)))  {
             result = Categories.equals(product.getCategory(), filters.get(FILTER_BY_CATEGORY).split(","));
+        }
+        return result;
+    }
+
+    public static boolean filterByName(Product product, Map<String, String> filters) {
+        boolean result = true;
+        if (filters.containsKey(FILTER_BY_NAME) && isNotBlank(filters.get(FILTER_BY_NAME)))  {
+            result = product.getName().toLowerCase(Locale.ROOT).contains(filters.get(FILTER_BY_NAME).toLowerCase(Locale.ROOT));
         }
         return result;
     }

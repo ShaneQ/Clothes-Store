@@ -2,6 +2,7 @@ package com.baeldung.resource.web.controller;
 
 import static com.baeldung.resource.web.dto.Filters.FILTER_BY_CATEGORY;
 import static com.baeldung.resource.web.dto.Filters.FILTER_BY_COLOR;
+import static com.baeldung.resource.web.dto.Filters.FILTER_BY_NAME;
 import static com.baeldung.resource.web.dto.Filters.FILTER_BY_SEASON;
 import static com.baeldung.resource.web.dto.Filters.FILTER_BY_SIZE;
 import static java.util.Objects.nonNull;
@@ -45,7 +46,7 @@ public class ProductController {
     @GetMapping("/query")
     public Collection<ProductDTO> search(@QueryParam(FILTER_BY_SIZE) String filterBySize,
             @QueryParam(FILTER_BY_COLOR) String filterByColor, @QueryParam(FILTER_BY_SEASON) String filterBySeason,
-            @QueryParam(FILTER_BY_CATEGORY) String filterByCategory) {
+            @QueryParam(FILTER_BY_CATEGORY) String filterByCategory, @QueryParam(FILTER_BY_NAME) String filterByName) {
         Map<String, String> filters = new HashMap<>();
         if (nonNull(filterBySize)) {
             filters.put(FILTER_BY_SIZE, filterBySize);
@@ -61,6 +62,9 @@ public class ProductController {
         }
         if (nonNull(filterByCategory)) {
             filters.put(FILTER_BY_CATEGORY, filterByCategory);
+        }
+        if (nonNull(filterByName)) {
+            filters.put(FILTER_BY_NAME, filterByName);
         }
         Iterable<Product> products = this.productService.findAllWithFilters(filters);
         List<ProductDTO> dtos = new ArrayList<>();
