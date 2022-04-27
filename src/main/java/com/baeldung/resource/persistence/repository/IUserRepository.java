@@ -7,5 +7,5 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface IUserRepository extends PagingAndSortingRepository<User, Long> {
 
-    Optional<User> findById(String fromString);
+    Optional<User> findById(UUID fromString);
 }

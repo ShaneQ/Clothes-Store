@@ -4,6 +4,7 @@ package com.baeldung.resource.service;
 import static org.junit.Assert.assertNotNull;
 
 import com.baeldung.resource.spring.properties.KeycloakClientProperties;
+import java.util.UUID;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -56,7 +57,7 @@ public class KeycloakServiceTest {
     @Test
     @Ignore
     public void mapRoleToUserClient(){
-        keycloakService.addSCCUserRole("bfa1f3f3-3bac-4968-b6fd-d97b41976c26");
+        keycloakService.addSCCUserRole(UUID.fromString("bfa1f3f3-3bac-4968-b6fd-d97b41976c26"));
 
     }
 }

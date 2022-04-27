@@ -2,17 +2,17 @@ package com.baeldung.resource.persistence.model;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 
 @Entity(name = "USER")
 @Data
@@ -22,7 +22,8 @@ import lombok.NoArgsConstructor;
 public class User {
 
     @Id
-    private String id;
+    @Type(type = "uuid-char")
+    private UUID id;
 
     private String firstName;
     private String lastName;

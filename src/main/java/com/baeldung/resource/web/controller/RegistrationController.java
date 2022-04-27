@@ -6,6 +6,7 @@ import com.baeldung.resource.web.dto.KeycloakUserInfo;
 
 import com.baeldung.resource.web.dto.UserDTO;
 import java.security.Principal;
+import java.util.UUID;
 import javax.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -39,9 +40,9 @@ public class RegistrationController {
     @PostMapping("/personal")
     public void create(@RequestBody UserDTO dto, Principal principal) {
 
-        String userId = principal.getName();
-        log.info("Personal info create for User: {}", userId);
-        User savedEntity = this.service.create(dto, userId);
+        UUID userGuid = UUID.fromString(principal.getName());
+        log.info("Personal info create for User: {}", userGuid);
+        User savedEntity = this.service.create(dto, userGuid);
 
         log.info("Personal Info Created with id:{}", savedEntity.getId());
     }
@@ -50,9 +51,9 @@ public class RegistrationController {
     @GetMapping("/personal/exists")
     public Response exists(Principal principal) {
 
-        String userId = principal.getName();
-        log.info("Check user registered id: {}", userId);
-        User entity = this.service.get(userId);
+        UUID userGuid = UUID.fromString(principal.getName());
+        log.info("Check user registered id: {}", userGuid);
+        User entity = this.service.get(userGuid);
         log.info("User with id exists : {}", entity.getId());
         return Response.ok().build();
     }

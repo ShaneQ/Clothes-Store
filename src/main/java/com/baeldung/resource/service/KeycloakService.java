@@ -7,6 +7,7 @@ import java.net.URI;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.keycloak.OAuth2Constants;
@@ -47,7 +48,7 @@ public class KeycloakService {
         this.keycloakClientProperties = keycloakClientProperties;
     }
 
-    public void addSCCUserRole(String userId){
+    public void addSCCUserRole(UUID userId){
 
         RoleRepresentation roleRepresentation = new RoleRepresentation();
         roleRepresentation.setId(keycloakClientProperties.getRoleId());
@@ -55,7 +56,7 @@ public class KeycloakService {
         roleRepresentation.setComposite(false);
         roleRepresentation.setClientRole(true);
         roleRepresentation.setContainerId(keycloakClientProperties.getClientId());
-        keycloakClient.realm("secondClosetClub").users().get(userId).roles().clientLevel(keycloakClientProperties.getClientId()).add(List.of(roleRepresentation));;
+        keycloakClient.realm("secondClosetClub").users().get(userId.toString()).roles().clientLevel(keycloakClientProperties.getClientId()).add(List.of(roleRepresentation));;
     }
 
     public Keycloak keycloakClient(){

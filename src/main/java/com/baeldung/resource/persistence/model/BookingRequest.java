@@ -2,7 +2,6 @@ package com.baeldung.resource.persistence.model;
 
 import java.util.Date;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -15,6 +14,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 
 @Entity(name = "BOOKING_REQUEST")
 @Data
@@ -31,8 +31,10 @@ public class BookingRequest {
     @JoinColumn(name = "id_product")
     private Product id_product;
 
-    @Column(name = "id_user")
-    private String userId;
+    @OneToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "id_user")
+    @Type(type = "uuid-char")
+    private User user;
 
     private Long id_productSize;
 

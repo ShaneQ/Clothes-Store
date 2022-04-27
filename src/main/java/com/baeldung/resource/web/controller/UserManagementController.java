@@ -7,6 +7,7 @@ import com.baeldung.resource.web.mappers.UserDTOMapper;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,14 +37,14 @@ public class UserManagementController {
     }
 
     @GetMapping("/user/{id}")
-    public UserDTO find(@PathVariable String id){
+    public UserDTO find(@PathVariable UUID id){
         User user = this.service.get(id);
         return UserDTOMapper.convertToDto(user);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/users/user/{userId}")
-    public void activateUser(@PathVariable String userId) {
+    public void activateUser(@PathVariable UUID userId) {
         log.info("Admin activated user id: {}", userId);
         this.service.activateUser(userId);
     }

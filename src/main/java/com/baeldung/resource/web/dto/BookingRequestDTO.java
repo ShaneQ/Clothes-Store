@@ -16,13 +16,19 @@ public class BookingRequestDTO {
 
     private Long productId;
 
+    private String productName;
+
     private String userId;
+
+    private String userName;
 
     private ImageDTO coverImg;
 
     private Long productSize;
 
     private Date startDate;
+
+    private Date returnDate;
 
     private String collectionPlace;
 
@@ -33,6 +39,5 @@ public class BookingRequestDTO {
         ACTIVE,
         LATE_RETURN,
         COMPLETE;
-
     }
 }

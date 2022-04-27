@@ -3,10 +3,11 @@ package com.baeldung.resource.web.mappers;
 import com.baeldung.resource.persistence.model.User;
 import com.baeldung.resource.web.dto.UserDTO;
 import com.baeldung.resource.web.dto.UserDTO.StatusDTO;
+import java.util.UUID;
 
 public class UserDTOMapper {
 
-    public static User convertToEntity(UserDTO dto, String userId) {
+    public static User convertToEntity(UserDTO dto, UUID userId) {
         return User.builder()
                 .id(userId)
                 .firstName(dto.getFirstName())
@@ -25,7 +26,7 @@ public class UserDTOMapper {
 
     public static UserDTO convertToDto(User entity) {
         return UserDTO.builder()
-                .id(entity.getId())
+                .id(entity.getId().toString())
                 .firstName(entity.getFirstName())
                 .lastName(entity.getLastName())
                 .dateOfBirth(entity.getDob())

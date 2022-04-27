@@ -22,12 +22,13 @@ public class UserService {
 
     private KeycloakService keycloakService;
 
-    public User create(UserDTO dto, String userId) {
+    public User create(UserDTO dto, UUID userId) {
         User entity = UserDTOMapper.convertToEntity(dto, userId);
         entity.setStatus(REQUESTED);
         return repository.save(entity);
     }
-    public User update(UserDTO dto, String userId) {
+
+    public User update(UserDTO dto, UUID userId) {
         User user = get(userId);
         User entity = UserDTOMapper.convertToEntity(dto, userId);
         entity.setStatus(user.getStatus());
@@ -35,7 +36,7 @@ public class UserService {
         return repository.save(entity);
     }
 
-    public User get(String id) {
+    public User get(UUID id) {
         return repository.findById(id).orElseThrow(() -> new ResourceNotFound("No Personal Info found"));
     }
 
@@ -43,14 +44,13 @@ public class UserService {
         return repository.findAll();
     }
 
-    public void activateUser(String id) {
+    public void activateUser(UUID id) {
         User user = this.get(id);
         keycloakService.addSCCUserRole(user.getId());
         user.setStatus(ACTIVATED);
         user.setStartDate(LocalDateTime.now());
         user.setEndDate(LocalDateTime.now().plusMonths(3));
         this.repository.save(user);
-
     }
 
     public KeycloakUserInfo getKeycloakInfo(String keycloakUserId) {

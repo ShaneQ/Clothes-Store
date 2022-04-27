@@ -9,9 +9,8 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import javax.servlet.http.HttpServletRequest;
+import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
-import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,31 +34,22 @@ public class UserBookingRequestController {
     @PostMapping("/api/private/booking")
     public void create(@RequestBody BookingRequestDTO dto, Principal principal) {
 
-        String userId = principal.getName();
+        UUID userGuid = UUID.fromString(principal.getName());
 
         dto.setStatus(StatusDTO.WAITING_COLLECTION);
 
-        BookingRequest savedEntity = this.service.save(dto, userId);
+        BookingRequest savedEntity = this.service.save(dto, userGuid);
 
         log.info("Booking Created with id:{}", savedEntity.getId());
     }
 
-    @GetMapping("/api/private/booking")
-    public Collection<BookingRequestDTO> findAllForUser( Principal principal) {
+    @GetMapping("/api/private/bookings")
+    public Collection<BookingRequestDTO> findAllForUser(Principal principal) {
 
-        String userId = principal.getName();
-        Iterable<BookingRequest> orders = this.service.findAllByUser(userId);
+        UUID userGuid = UUID.fromString(principal.getName());
+        Iterable<BookingRequest> orders = this.service.findAllByUser(userGuid);
         List<BookingRequestDTO> dtos = new ArrayList<>();
         orders.forEach(p -> dtos.add(BookingRequestDTOMapper.convertToDto(p)));
         return dtos;
     }
-
-    @GetMapping("/api/admin/booking")
-    public Collection<BookingRequestDTO> findAll() {
-        Iterable<BookingRequest> orders = this.service.findAll();
-        List<BookingRequestDTO> dtos = new ArrayList<>();
-        orders.forEach(p -> dtos.add(BookingRequestDTOMapper.convertToDto(p)));
-        return dtos;
-    }
-
 }
