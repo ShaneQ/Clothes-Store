@@ -32,7 +32,7 @@ public class RegistrationController {
     @GetMapping("/user/info")
     public KeycloakUserInfo getUserInfo(Principal principal) {
 
-        String keycloakUserId = principal.getName();
+        UUID keycloakUserId = UUID.fromString(principal.getName());
         return service.getKeycloakInfo(keycloakUserId);
     }
 

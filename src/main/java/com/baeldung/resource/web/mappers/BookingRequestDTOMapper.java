@@ -7,8 +7,7 @@ import com.baeldung.resource.web.dto.BookingRequestDTO;
 import com.baeldung.resource.web.dto.BookingRequestDTO.StatusDTO;
 import com.baeldung.resource.web.dto.ImageDTO;
 import com.baeldung.resource.web.dto.ProductSizeDTO;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class BookingRequestDTOMapper {
 
@@ -21,11 +20,7 @@ public class BookingRequestDTOMapper {
     }
 
     public static BookingRequestDTO convertToDto(BookingRequest entity) {
-        Date returnDate = entity.getStartDate();
-        Calendar c = Calendar.getInstance();
-        c.setTime(returnDate);
-        c.add(Calendar.DATE, 7);
-        returnDate = c.getTime();
+        LocalDate returnDate = entity.getStartDate().plusDays(7);
         return BookingRequestDTO.builder()
                 .id(entity.getId())
                 .productId(entity.getProductInventory().getId_product().getId())

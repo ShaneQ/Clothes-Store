@@ -5,6 +5,7 @@ import com.baeldung.resource.persistence.model.BookingRequest.Status;
 import com.baeldung.resource.service.BookingRequestService;
 import com.baeldung.resource.web.dto.BookingRequestDTO;
 import com.baeldung.resource.web.mappers.BookingRequestDTOMapper;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -31,9 +32,17 @@ public class BookingManagementController {
         return dtos;
     }
 
-    @GetMapping("/bookings/{userGuid}")
+    @GetMapping("/bookings/user/{userGuid}")
     public Collection<BookingRequestDTO> findAllAdminForUser(@PathVariable UUID userGuid) {
-        Iterable<BookingRequest> orders = this.service.findAllByUser(userGuid);
+        List<BookingRequest> orders = this.service.findAllByUser(userGuid, LocalDate.now().minusYears(1));
+        List<BookingRequestDTO> dtos = new ArrayList<>();
+        orders.forEach(p -> dtos.add(BookingRequestDTOMapper.convertToDto(p)));
+        return dtos;
+    }
+
+    @GetMapping("/bookings/product/{productId}")
+    public Collection<BookingRequestDTO> findAllAdminForProduct(@PathVariable Long productId) {
+        Iterable<BookingRequest> orders = this.service.findAllByProduct(productId);
         List<BookingRequestDTO> dtos = new ArrayList<>();
         orders.forEach(p -> dtos.add(BookingRequestDTOMapper.convertToDto(p)));
         return dtos;

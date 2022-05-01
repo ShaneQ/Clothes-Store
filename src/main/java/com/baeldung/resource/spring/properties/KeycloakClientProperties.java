@@ -21,5 +21,6 @@ public class KeycloakClientProperties {
     private String username;
     private String password;
     private String clientId;
-    private String roleId;
+    private String roleUserId;
+    private String roleActiveMemberId;
 }

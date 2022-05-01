@@ -6,6 +6,8 @@ import com.baeldung.resource.persistence.model.User;
 import com.baeldung.resource.persistence.repository.IBookingRequestRepository;
 import com.baeldung.resource.web.dto.BookingRequestDTO;
 import com.baeldung.resource.web.mappers.BookingRequestDTOMapper;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -16,7 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 public class BookingRequestService {
 
-    private IBookingRequestRepository repository;
+    private final IBookingRequestRepository repository;
 
     public BookingRequestService(IBookingRequestRepository repository) {
         this.repository = repository;
@@ -28,8 +30,12 @@ public class BookingRequestService {
         return repository.save(entity);
     }
 
-    public Iterable<BookingRequest> findAllByUser(UUID userId) {
-        return repository.findAllByUserId(userId);
+    public List<BookingRequest> findAllByUser(UUID userId, LocalDate fromDate) {
+        return repository.findAllByUserIdAndStartDateGreaterThan(userId, fromDate);
+    }
+
+    public Iterable<BookingRequest> findAllByProduct(Long productId) {
+        return repository.findAllByProductId(productId);
     }
 
     public Iterable<BookingRequest> findAll() {

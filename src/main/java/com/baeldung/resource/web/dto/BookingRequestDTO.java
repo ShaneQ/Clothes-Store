@@ -1,5 +1,6 @@
 package com.baeldung.resource.web.dto;
 
+import java.time.LocalDate;
 import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,9 +27,9 @@ public class BookingRequestDTO {
 
     private ProductSizeDTO productSize;
 
-    private Date startDate;
+    private LocalDate startDate;
 
-    private Date returnDate;
+    private LocalDate returnDate;
 
     private String collectionPlace;
 

@@ -4,6 +4,7 @@ package com.baeldung.resource.service;
 import static org.junit.Assert.assertNotNull;
 
 import com.baeldung.resource.spring.properties.KeycloakClientProperties;
+import com.baeldung.resource.web.dto.Role;
 import java.util.UUID;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.junit.Before;
@@ -28,7 +29,8 @@ public class KeycloakServiceTest {
                 .clientId("276928b9-4218-4443-bec7-956b20a610b0")
                 .password("masterapiuser")
                 .username("masterapiuser")
-                .roleId("23aa99f0-6e9d-46fa-8bbd-51902da41834")
+                .roleUserId("23aa99f0-6e9d-46fa-8bbd-51902da41834")
+                .roleActiveMemberId("23aa99f0-6e9d-46fa-8bbd-51902da41834")
                 .build();
         Keycloak keycloakClient = KeycloakBuilder.builder()
                 .serverUrl("http://localhost:8083/auth")
@@ -41,7 +43,7 @@ public class KeycloakServiceTest {
                         new ResteasyClientBuilder()
                                 .connectionPoolSize(10).build()
                 ).build();
-        keycloakService= new KeycloakService(new RestTemplateBuilder(), keycloakClient,
+        keycloakService= new KeycloakService(keycloakClient,
                 keycloakClientProperties);
     }
 
@@ -57,7 +59,7 @@ public class KeycloakServiceTest {
     @Test
     @Ignore
     public void mapRoleToUserClient(){
-        keycloakService.addSCCUserRole(UUID.fromString("bfa1f3f3-3bac-4968-b6fd-d97b41976c26"));
+        keycloakService.addRole(UUID.fromString("bfa1f3f3-3bac-4968-b6fd-d97b41976c26"), Role.SCC_USER_ROLE);
 
     }
 }

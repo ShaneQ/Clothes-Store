@@ -25,6 +25,13 @@ public class UserDTOMapper {
     }
 
     public static UserDTO convertToDto(User entity) {
+        int bookingAllowanceRemainingMonthly = 0;
+        int bookingAllowanceMonthly = 0;
+        if(entity.getMembership() == 1){
+            bookingAllowanceMonthly = 4;
+        }else if(entity.getMembership() ==2){
+            bookingAllowanceMonthly = 8;
+        }
         return UserDTO.builder()
                 .id(entity.getId().toString())
                 .firstName(entity.getFirstName())
@@ -41,6 +48,8 @@ public class UserDTOMapper {
                 .membership(entity.getMembership())
                 .startDate(entity.getStartDate())
                 .endDate(entity.getEndDate())
+                .bookingAllowanceMonthly(bookingAllowanceMonthly)
+                .bookingAllowanceRemainingMonthly(bookingAllowanceRemainingMonthly)
                 .build();
     }
 }

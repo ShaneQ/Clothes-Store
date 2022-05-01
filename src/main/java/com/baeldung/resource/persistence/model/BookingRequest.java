@@ -1,8 +1,6 @@
 package com.baeldung.resource.persistence.model;
 
-import java.util.Date;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
+import java.time.LocalDate;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -39,7 +37,7 @@ public class BookingRequest {
     @Type(type = "uuid-char")
     private User user;
 
-    private Date startDate;
+    private LocalDate startDate;
 
     private String collectionPlace;
 

@@ -43,7 +43,6 @@ public class UserController {
         log.info("Personal info request for User: {}", keycloakUserId);
 
         User entity = this.service.get(keycloakUserId);
-        log.info("Personal Info Retrieved with id:{}", entity.getId());
 
         return UserDTOMapper.convertToDto(entity);
     }

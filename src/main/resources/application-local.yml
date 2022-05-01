@@ -27,4 +27,5 @@ keycloak-client:
   username: masterapiuser
   password: masterapiuser
   clientId: b88ce206-63d6-43b6-87c9-ea09d8c02f32
-  roleId: c9efed4b-9edd-486d-a16f-dc5654ddf0b7
+  roleUserId: c9efed4b-9edd-486d-a16f-dc5654ddf0b7
+  roleActiveMemberId: 4547c5d2-eb03-426f-bf3b-d7bf9a1a76dc

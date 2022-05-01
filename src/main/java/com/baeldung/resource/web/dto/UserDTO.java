@@ -1,10 +1,7 @@
 package com.baeldung.resource.web.dto;
 
-import com.baeldung.resource.web.dto.BookingRequestDTO.StatusDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,10 +27,12 @@ public class UserDTO {
     private String addressLineTwo;
     private StatusDTO status;
     private int membership;
-    @JsonFormat(pattern="dd-MM-yyyy")
-    private LocalDateTime startDate;
-    @JsonFormat(pattern="dd-MM-yyyy")
-    private LocalDateTime endDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+    private LocalDate startDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+    private LocalDate endDate;
+    private Integer bookingAllowanceMonthly;
+    private Integer bookingAllowanceRemainingMonthly;
 
     public enum StatusDTO {
         REQUESTED,
@@ -41,5 +40,4 @@ public class UserDTO {
         DEACTIVATED,
         BLOCKED;
     }
-
 }

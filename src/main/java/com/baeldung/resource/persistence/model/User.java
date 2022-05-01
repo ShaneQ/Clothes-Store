@@ -1,6 +1,6 @@
 package com.baeldung.resource.persistence.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 import javax.persistence.Column;
@@ -36,8 +36,8 @@ public class User {
     private String eirCode;
     private String addressLineOne;
     private String addressLineTwo;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private int membership;
 
     @Enumerated(EnumType.STRING)

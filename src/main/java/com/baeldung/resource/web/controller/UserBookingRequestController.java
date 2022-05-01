@@ -6,6 +6,7 @@ import com.baeldung.resource.web.dto.BookingRequestDTO;
 import com.baeldung.resource.web.dto.BookingRequestDTO.StatusDTO;
 import com.baeldung.resource.web.mappers.BookingRequestDTOMapper;
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -24,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping()
 public class UserBookingRequestController {
 
-    private BookingRequestService service;
+    private final BookingRequestService service;
 
     public UserBookingRequestController(BookingRequestService bookingRequestService) {
         this.service = bookingRequestService;
@@ -47,7 +48,7 @@ public class UserBookingRequestController {
     public Collection<BookingRequestDTO> findAllForUser(Principal principal) {
 
         UUID userGuid = UUID.fromString(principal.getName());
-        Iterable<BookingRequest> orders = this.service.findAllByUser(userGuid);
+        Iterable<BookingRequest> orders = this.service.findAllByUser(userGuid, LocalDate.now().minusYears(1));
         List<BookingRequestDTO> dtos = new ArrayList<>();
         orders.forEach(p -> dtos.add(BookingRequestDTOMapper.convertToDto(p)));
         return dtos;
