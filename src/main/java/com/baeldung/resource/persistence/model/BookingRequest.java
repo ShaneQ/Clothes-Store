@@ -2,13 +2,16 @@ package com.baeldung.resource.persistence.model;
 
 import java.util.Date;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,16 +30,14 @@ public class BookingRequest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.DETACH)
-    @JoinColumn(name = "id_product")
-    private Product id_product;
+    @JoinColumn(name = "id_product_size")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private ProductInventory productInventory;
 
-    @OneToOne(cascade = CascadeType.DETACH)
+    @OneToOne
     @JoinColumn(name = "id_user")
     @Type(type = "uuid-char")
     private User user;
-
-    private Long id_productSize;
 
     private Date startDate;
 

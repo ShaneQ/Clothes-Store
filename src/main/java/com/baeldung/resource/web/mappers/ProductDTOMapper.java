@@ -8,10 +8,10 @@ import com.baeldung.resource.persistence.model.ProductMeasurement;
 import com.baeldung.resource.persistence.model.ProductSize;
 import com.baeldung.resource.persistence.model.Season;
 import com.baeldung.resource.persistence.model.Size;
-import com.baeldung.resource.web.dto.ProductMeasurementDTO;
 import com.baeldung.resource.web.dto.ImageDTO;
 import com.baeldung.resource.web.dto.ProductDTO;
-import com.baeldung.resource.web.dto.SizeDTO;
+import com.baeldung.resource.web.dto.ProductMeasurementDTO;
+import com.baeldung.resource.web.dto.ProductSizeDTO;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,20 +40,23 @@ public class ProductDTOMapper {
                 .length(dto.getMeasurements().getLength())
                 .waist(dto.getMeasurements().getWaist())
                 .build();
-        if(dto.getId() == null){
+        if (dto.getId() == null) {
             measurement.setProduct(product);
-        }else{
+        } else {
             measurement.setId(dto.getId());
         }
         product.setMeasurement(measurement);
         ArrayList<ProductSize> productSizes = new ArrayList<>();
-        for (SizeDTO size : dto.getSizes()) {
+        for (ProductSizeDTO size : dto.getSizes()) {
             ProductSize productSize = new ProductSize();
-            productSize.setSize(new Size(size.getId(), null));
+            productSize.setSize(new Size(size.getId_size(), null));
             productSize.setId_product(product.getId());
+            if (size.getId() != null) {
+                productSize.setId(size.getId());
+            }
             productSizes.add(productSize);
         }
-        Image coverImage = new Image(dto.getImgCover().getId(),dto.getImgCover().getUrl(),"TEST");
+        Image coverImage = new Image(dto.getImgCover().getId(), dto.getImgCover().getUrl(), "TEST");
         product.setImgCover(coverImage);
         product.setSizes(productSizes);
 /*        if (dto.getImages() != null) {
@@ -68,7 +71,7 @@ public class ProductDTOMapper {
             product.setImages(productImages);
         }*/
         if (dto.getImages() != null) {
-            List<Image> productImages =  new ArrayList<>();
+            List<Image> productImages = new ArrayList<>();
 
             for (ImageDTO imageDTO : dto.getImages()) {
                 Image image = new Image(imageDTO.getId(), imageDTO.getUrl(), "TEST");
@@ -98,10 +101,16 @@ public class ProductDTOMapper {
                 .hidden(entity.isHidden())
                 .brand(entity.getBrand())
                 .build();
-        dto.setImages(entity.getImages().stream().map(entityImage -> new ImageDTO(entityImage.getId(), entityImage.getPath())).collect(
-                Collectors.toList()));
-        dto.setMeasurements(new ProductMeasurementDTO(entity.getMeasurement().getLength(),entity.getMeasurement().getChest(),entity.getMeasurement().getHips(),entity.getMeasurement().getWaist()));
-        dto.setSizes(entity.getSizes().stream().map( entitySize -> new SizeDTO(entitySize.getSize().getId(), entitySize.getSize().getName())).collect(Collectors.toList()));
+        dto.setImages(
+                entity.getImages().stream().map(entityImage -> new ImageDTO(entityImage.getId(), entityImage.getPath()))
+                        .collect(
+                                Collectors.toList()));
+        dto.setMeasurements(
+                new ProductMeasurementDTO(entity.getMeasurement().getLength(), entity.getMeasurement().getChest(),
+                        entity.getMeasurement().getHips(), entity.getMeasurement().getWaist()));
+        dto.setSizes(entity.getSizes().stream()
+                .map(entitySize -> new ProductSizeDTO(entitySize.getId(), entitySize.getSize().getId()))
+                .collect(Collectors.toList()));
         return dto;
     }
 }

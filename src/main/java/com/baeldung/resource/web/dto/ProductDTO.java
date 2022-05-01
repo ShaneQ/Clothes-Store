@@ -30,6 +30,6 @@ public class ProductDTO {
     private ProductMeasurementDTO measurements;
     private ImageDTO imgCover;
     private List<ImageDTO> images;
-    private List<SizeDTO> sizes;
+    private List<ProductSizeDTO> sizes;
     private List<ProductOccasion> occasions;
 }

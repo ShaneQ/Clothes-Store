@@ -24,7 +24,7 @@ public class BookingRequestDTO {
 
     private ImageDTO coverImg;
 
-    private Long productSize;
+    private ProductSizeDTO productSize;
 
     private Date startDate;
 

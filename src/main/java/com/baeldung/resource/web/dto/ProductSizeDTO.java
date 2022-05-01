@@ -1,14 +1,17 @@
 package com.baeldung.resource.web.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class SizeDTO {
+@NoArgsConstructor
+@Builder
+public class ProductSizeDTO {
 
     private Long id;
-    private String name;
+
+    private Long id_size;
 }
