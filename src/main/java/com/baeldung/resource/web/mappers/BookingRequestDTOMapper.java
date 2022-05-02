@@ -4,6 +4,7 @@ import com.baeldung.resource.persistence.model.BookingRequest;
 import com.baeldung.resource.persistence.model.BookingRequest.Status;
 import com.baeldung.resource.persistence.model.Product;
 import com.baeldung.resource.persistence.model.ProductInventory;
+import com.baeldung.resource.persistence.model.ProductInventoryStatus;
 import com.baeldung.resource.web.dto.BookingRequestDTO;
 import com.baeldung.resource.web.dto.BookingRequestDTO.StatusDTO;
 import com.baeldung.resource.web.dto.ImageDTO;
@@ -27,7 +28,7 @@ public class BookingRequestDTOMapper {
                 .id(entity.getId())
                 .productId(entity.getProductInventory().getId_product())
                 .productSize(ProductSizeDTO.builder().id(entity.getProductInventory().getSize().getId())
-                        .id_size(entity.getProductInventory().getSize().getId()).build())
+                        .id_size(entity.getProductInventory().getSize().getId()).status(ProductInventoryStatus.valueOf(entity.getProductInventory().getStatus())).build())
                 .startDate(entity.getStartDate())
                 .returnDate(returnDate)
                 .userId(entity.getUser().getId().toString())
