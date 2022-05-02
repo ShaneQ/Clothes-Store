@@ -1,7 +1,9 @@
 package com.baeldung.resource.service;
 
+import com.baeldung.resource.exceptions.ResourceNotFound;
 import com.baeldung.resource.persistence.model.BookingRequest;
 import com.baeldung.resource.persistence.model.BookingRequest.Status;
+import com.baeldung.resource.persistence.model.Product;
 import com.baeldung.resource.persistence.model.User;
 import com.baeldung.resource.persistence.repository.IBookingRequestRepository;
 import com.baeldung.resource.web.dto.BookingRequestDTO;
@@ -9,6 +11,7 @@ import com.baeldung.resource.web.mappers.BookingRequestDTOMapper;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -16,16 +19,17 @@ import org.springframework.web.server.ResponseStatusException;
 
 @Slf4j
 @Service
+@AllArgsConstructor
 public class BookingRequestService {
 
     private final IBookingRequestRepository repository;
 
-    public BookingRequestService(IBookingRequestRepository repository) {
-        this.repository = repository;
-    }
+    private final IProductService productService;
 
     public BookingRequest save(BookingRequestDTO dto, UUID userId) {
-        BookingRequest entity = BookingRequestDTOMapper.convertToEntity(dto);
+        Product product = productService.findById(dto.getProductId())
+                .orElseThrow(() -> new ResourceNotFound("Product not found"));
+        BookingRequest entity = BookingRequestDTOMapper.convertToEntity(dto, product);
         entity.setUser(User.builder().id(userId).build());
         return repository.save(entity);
     }

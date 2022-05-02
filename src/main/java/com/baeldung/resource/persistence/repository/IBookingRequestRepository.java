@@ -11,7 +11,8 @@ import org.springframework.data.repository.query.Param;
 public interface IBookingRequestRepository extends PagingAndSortingRepository<BookingRequest, Long> {
 
     List<BookingRequest> findAllByUserIdAndStartDateGreaterThan(UUID userId, LocalDate startDate);
-    @Query("SELECT a from BOOKING_REQUEST a  left join ProductSize b on a.productInventory.id=b.id where b.id_product = :productId")
+
+    @Query("SELECT a from BOOKING_REQUEST a  left join ProductInventory b on a.productInventory.id=b.id where b.product_id = :productId")
     List<BookingRequest> findAllByProductId(@Param("productId") long productId);
 
 }

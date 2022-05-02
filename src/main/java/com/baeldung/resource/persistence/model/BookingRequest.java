@@ -32,6 +32,10 @@ public class BookingRequest {
     @ManyToOne(fetch = FetchType.LAZY)
     private ProductInventory productInventory;
 
+    @JoinColumn(name = "id_product")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Product product;
+
     @OneToOne
     @JoinColumn(name = "id_user")
     @Type(type = "uuid-char")

@@ -5,7 +5,7 @@ import com.baeldung.resource.persistence.model.Image;
 import com.baeldung.resource.persistence.model.Product;
 import com.baeldung.resource.persistence.model.ProductCategory;
 import com.baeldung.resource.persistence.model.ProductMeasurement;
-import com.baeldung.resource.persistence.model.ProductSize;
+import com.baeldung.resource.persistence.model.ProductInventory;
 import com.baeldung.resource.persistence.model.Season;
 import com.baeldung.resource.persistence.model.Size;
 import com.baeldung.resource.web.dto.ImageDTO;
@@ -46,11 +46,11 @@ public class ProductDTOMapper {
             measurement.setId(dto.getId());
         }
         product.setMeasurement(measurement);
-        ArrayList<ProductSize> productSizes = new ArrayList<>();
+        ArrayList<ProductInventory> productSizes = new ArrayList<>();
         for (ProductSizeDTO size : dto.getSizes()) {
-            ProductSize productSize = new ProductSize();
+            ProductInventory productSize = new ProductInventory();
             productSize.setSize(new Size(size.getId_size(), null));
-            productSize.setId_product(product.getId());
+            productSize.setProduct_id(product.getId());
             if (size.getId() != null) {
                 productSize.setId(size.getId());
             }
