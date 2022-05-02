@@ -4,6 +4,7 @@ import com.baeldung.resource.persistence.model.Color;
 import com.baeldung.resource.persistence.model.Image;
 import com.baeldung.resource.persistence.model.Product;
 import com.baeldung.resource.persistence.model.ProductCategory;
+import com.baeldung.resource.persistence.model.ProductInventoryStatus;
 import com.baeldung.resource.persistence.model.ProductMeasurement;
 import com.baeldung.resource.persistence.model.ProductInventory;
 import com.baeldung.resource.persistence.model.Season;
@@ -109,7 +110,7 @@ public class ProductDTOMapper {
                 new ProductMeasurementDTO(entity.getMeasurement().getLength(), entity.getMeasurement().getChest(),
                         entity.getMeasurement().getHips(), entity.getMeasurement().getWaist()));
         dto.setSizes(entity.getSizes().stream()
-                .map(entitySize -> new ProductSizeDTO(entitySize.getId(), entitySize.getSize().getId()))
+                .map(entitySize -> new ProductSizeDTO(entitySize.getId(), entitySize.getSize().getId(), ProductInventoryStatus.valueOf(entitySize.getStatus())))
                 .collect(Collectors.toList()));
         return dto;
     }

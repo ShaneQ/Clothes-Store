@@ -1,5 +1,6 @@
 package com.baeldung.resource.web.dto;
 
+import com.baeldung.resource.persistence.model.ProductInventoryStatus;
 import java.time.LocalDate;
 import java.util.Date;
 import lombok.AllArgsConstructor;
