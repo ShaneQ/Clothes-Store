@@ -67,7 +67,7 @@ public class Product {
     private List<ProductOccasion> occasions;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "id_product")
     private List<ProductInventory> sizes;
 
 }

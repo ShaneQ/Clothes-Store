@@ -12,7 +12,7 @@ public interface IBookingRequestRepository extends PagingAndSortingRepository<Bo
 
     List<BookingRequest> findAllByUserIdAndStartDateGreaterThan(UUID userId, LocalDate startDate);
 
-    @Query("SELECT a from BOOKING_REQUEST a  left join ProductInventory b on a.productInventory.id=b.id where b.product_id = :productId")
+    @Query("SELECT a from BOOKING_REQUEST a  left join ProductInventory b on a.productInventory.id=b.id where b.id_product = :productId")
     List<BookingRequest> findAllByProductId(@Param("productId") long productId);
 
 }

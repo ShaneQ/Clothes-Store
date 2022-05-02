@@ -73,7 +73,7 @@ INSERT INTO product (id, name, id_product_category, id_cover_img, id_season, id_
   (5,'Coat', 4, 1,3, 10, FALSE, 500,'Something Bad','Nylon','something very long','i will make you feel 30','care for it really well', 'some brand');
 ;
 
-INSERT INTO product_inventory (id,product_id, id_size, status) VALUES
+INSERT INTO product_inventory (id,id_product, id_size, status) VALUES
   (1,1, 1, 'STORED'),
   (2,2, 2,  'STORED'),
   (3,3, 3,  'STORED'),

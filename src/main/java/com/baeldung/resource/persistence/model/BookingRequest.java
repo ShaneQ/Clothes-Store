@@ -28,7 +28,7 @@ public class BookingRequest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JoinColumn(name = "id_product_size")
+    @JoinColumn(name = "id_product_inventory")
     @ManyToOne(fetch = FetchType.LAZY)
     private ProductInventory productInventory;
 

@@ -50,7 +50,7 @@ public class ProductDTOMapper {
         for (ProductSizeDTO size : dto.getSizes()) {
             ProductInventory productSize = new ProductInventory();
             productSize.setSize(new Size(size.getId_size(), null));
-            productSize.setProduct_id(product.getId());
+            productSize.setId_product(product.getId());
             if (size.getId() != null) {
                 productSize.setId(size.getId());
             }

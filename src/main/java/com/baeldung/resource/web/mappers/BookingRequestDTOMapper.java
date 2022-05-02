@@ -25,7 +25,7 @@ public class BookingRequestDTOMapper {
         LocalDate returnDate = entity.getStartDate().plusDays(7);
         return BookingRequestDTO.builder()
                 .id(entity.getId())
-                .productId(entity.getProductInventory().getProduct_id())
+                .productId(entity.getProductInventory().getId_product())
                 .productSize(ProductSizeDTO.builder().id(entity.getProductInventory().getSize().getId())
                         .id_size(entity.getProductInventory().getSize().getId()).build())
                 .startDate(entity.getStartDate())
