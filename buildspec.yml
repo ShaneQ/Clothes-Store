@@ -15,8 +15,11 @@ phases:
       - echo Build started on `date`
       - echo Building the Docker image...
       - echo $REPOSITORY_URI:latest
+      - docker login -u banditquaid --password SomethingLong123
       - docker build -t public.ecr.aws/r5r0j5k2:latest .
       - docker tag public.ecr.aws/r5r0j5k2/resource-server:latest public.ecr.aws/r5r0j5k2/resource-server:$IMAGE_TAG
+      - docker tag public.ecr.aws/r5r0j5k2/resource-server:${CODEBUILD_RESOLVED_SOURCE_VERSION}-v${CODEBUILD_BUILD_NUMBER}
+
   post_build:
     commands:
       - echo Build completed on `date`
