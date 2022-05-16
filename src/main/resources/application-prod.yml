@@ -20,7 +20,6 @@ scc:
     secretKey: RLnzxVdU7KfK/tGM0+D0184v9LIZKV337xwJz/ct
 
 ---
-
 keycloak-client:
   server-url: ${KEYCLOAK_BASE_URI}
   username: masterapiuser
