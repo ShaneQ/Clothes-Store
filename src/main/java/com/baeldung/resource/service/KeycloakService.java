@@ -68,6 +68,7 @@ public class KeycloakService {
                 .clientLevel(keycloakClientProperties.getClientId()).listAll().stream()
                 .anyMatch(roleRep -> roleRep.getName().equalsIgnoreCase(roleName));
         if (hasRole) {
+
             log.info("Removed role {} to user {}", roleName, userId);
             keycloakClient.realm(SECOND_CLOSET_CLUB).users().get(userId.toString()).roles()
                     .clientLevel(keycloakClientProperties.getClientId()).remove(List.of(getKeycloakRole(role)));
