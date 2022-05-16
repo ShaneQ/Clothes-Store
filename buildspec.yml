@@ -4,7 +4,7 @@ phases:
   pre_build:
     commands:
       - mvn clean package
-      - mv target/oauth-resource-server-0.1.1-SNAPSHOT.jar resource-server.war
+      - cp target/oauth-resource-server-0.1.1-SNAPSHOT.jar resource-server.war
       - echo Logging in to Amazon ECR...
       - aws --version
       - aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/r5r0j5k2
