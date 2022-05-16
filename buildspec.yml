@@ -30,4 +30,4 @@ phases:
 artifacts:
   files:
    - imagedefinitions.json
-   - target/resource-service.jar
+   - /target/oauth-resource-server-0.1.1-SNAPSHOT.jar
