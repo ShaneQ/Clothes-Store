@@ -18,8 +18,9 @@ phases:
       - echo $REPOSITORY_URI:latest
       - docker login -u banditquaid --password SomethingLong123
       - docker build -t $REPOSITORY_URI:latest .
-      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
-
+      - docker build -t resource-server .
+      - docker tag resource-server:latest $REPOSITORY_URI:latest
+      - docker tag resource-server:latest $REPOSITORY_URI:$IMAGE_TAG
   post_build:
     commands:
       - echo Build completed on `date`
