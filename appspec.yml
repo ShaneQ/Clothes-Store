@@ -1,7 +1,0 @@
-version: 0.0
-os: linux
-files:
-  - source: ./resource-server.jar
-    destination: /tmp/resource-service.jar
-  - source: .imagedefinitions.json
-    destination: /tmp
