@@ -7,7 +7,7 @@ phases:
       - echo Logging in to Amazon ECR...
       - aws --version
       - aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/r5r0j5k2
-      - REPOSITORY_URI=public.ecr.aws/resource-server/r5r0j5k2
+      - REPOSITORY_URI=public.ecr.aws/r5r0j5k2/resource-server
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
   build:
@@ -16,16 +16,16 @@ phases:
       - echo Building the Docker image...
       - echo $REPOSITORY_URI:latest
       - docker login -u banditquaid --password SomethingLong123
-      - docker build -t public.ecr.aws/r5r0j5k2/resource-server:latest .
-      - docker tag public.ecr.aws/r5r0j5k2/resource-server:latest public.ecr.aws/r5r0j5k2/resource-server:$IMAGE_TAG
+      - docker build -t $REPOSITORY_URI:latest .
+      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
 
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker images...
-      - docker push public.ecr.aws/r5r0j5k2/resource-server:$IMAGE_TAG
+      - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo Writing image definitions file...
-      - printf '[{"name":"resource-service","imageUri":"%s"}]' public.ecr.aws/r5r0j5k2/resource-server:$IMAGE_TAG > imagedefinitions.json
+      - printf '[{"name":"resource-service","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
       - cat imagedefinitions.json
 artifacts:
   files:
