@@ -1,0 +1,12 @@
+version: '2'
+services:
+    resource-server:
+        container_name: resource-server
+        build:
+            context: /Users/shanequaid/IdeaProjects/Clothes-Store/
+            dockerfile: Dockerfile
+        image: resource-server:latest
+        ports:
+            - 8084:8084
+        environment:
+          - KEYCLOAK_BASE_URI=http://localhost:8083/auth

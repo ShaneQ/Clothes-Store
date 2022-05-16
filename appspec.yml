@@ -1,0 +1,5 @@
+version: 0.0
+os: linux
+files:
+  - source: ./oauth-resource-server-0.1.1-SNAPSHOT.jar
+    destination: /tmp

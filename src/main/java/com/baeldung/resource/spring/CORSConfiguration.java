@@ -19,7 +19,7 @@ public class CORSConfiguration {
         CorsConfiguration config = new CorsConfiguration();
 
         config.setAllowCredentials(true);
-        config.setAllowedOrigins(Arrays.asList("http://localhost:8089","http://localhost:8089/", "http://localhost:8090"));
+        config.setAllowedOrigins(Arrays.asList("http://localhost:8089","http://localhost:8089/", "http://localhost:8090", "https://www.2ndclosetclub.com","https://2ndclosetclub.com"));
         config.setAllowedMethods(Arrays.asList(CorsConfiguration.ALL));
         config.setAllowedHeaders(Arrays.asList(CorsConfiguration.ALL));
         config.setAllowCredentials(true);

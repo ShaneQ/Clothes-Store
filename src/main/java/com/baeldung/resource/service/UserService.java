@@ -12,8 +12,10 @@ import com.baeldung.resource.web.dto.UserManagementDTO;
 import com.baeldung.resource.web.mappers.UserDTOMapper;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @AllArgsConstructor
 public class UserService {
@@ -61,7 +63,12 @@ public class UserService {
         switch (dto.getStatus()) {
             case ACTIVATED:
                 if (dto.getMembership() == 1 || dto.getMembership() == 2) {
-                    keycloakService.addRole(userId, Role.SCC_ACTIVE_MEMBERSHIP);
+                    try {
+                        keycloakService.addRole(userId, Role.SCC_ACTIVE_MEMBERSHIP);
+                    } catch (Exception ex) {
+                        log.error("Exception occurred when communicating with keycloak via the client", ex);
+                        throw ex;
+                    }
                 }
                 break;
             case REQUESTED:

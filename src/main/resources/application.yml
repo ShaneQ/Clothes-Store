@@ -15,6 +15,12 @@ spring:
     enabled: false
 ---
 
+logging:
+  level:
+    org:
+      springframework:
+        security: ${SECURITY_LOGGING_LEVEL:info}
+
 keycloak:
   auth-server-url: http://localhost:8083/auth
   realm: SecondClosetClub
@@ -37,3 +43,8 @@ keycloak:
         - name: Admin only endpoints
           patterns:
             - /api/admin/*
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

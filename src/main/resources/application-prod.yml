@@ -7,7 +7,7 @@ spring:
 
   flyway:
     url: jdbc:mysql://scc.cxnse0qgwvdu.eu-west-1.rds.amazonaws.com:3306
-    schemas: resource
+    schemas: resource-local
     user: admin
     password: TESTING
     enabled: true
@@ -22,8 +22,33 @@ scc:
 ---
 
 keycloak-client:
-  server-url: http://localhost:8083/auth
+  server-url: ${KEYCLOAK_BASE_URI}
   username: masterapiuser
   password: masterapiuser
   clientId: b88ce206-63d6-43b6-87c9-ea09d8c02f32
-  roleId: 9f897986-73e0-46b7-a5f3-5c2a6235b4ce
+  roleUserId: c9efed4b-9edd-486d-a16f-dc5654ddf0b7
+  roleActiveMemberId: 4547c5d2-eb03-426f-bf3b-d7bf9a1a76dc
+
+keycloak:
+  auth-server-url:  ${KEYCLOAK_BASE_URI}
+  proxyUrl: ${KEYCLOAK_PROXY_URI}
+  realm: SecondClosetClub
+  resource: frontEnd
+  public-client: true
+  ssl-required: none
+  cors: true
+  bearer-only: true
+  use-resource-role-mappings: true
+  security-constraints:
+    - authRoles:
+        - scc_user_role
+      security-collections:
+        - name: Logged in endpoint
+        - patterns:
+            - /api/private/*
+    - authRoles:
+        - scc_admin_role
+      security-collections:
+        - name: Admin only endpoints
+          patterns:
+            - /api/admin/*
