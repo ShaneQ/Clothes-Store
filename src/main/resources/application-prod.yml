@@ -2,12 +2,8 @@ server:
   port: 8084
   servlet:
     context-path: /resource-server
-
----
-spring:
-  flyway:
-    enabled: false
----
+  tomcat:
+    max-threads: 20
 
 logging:
   level:
