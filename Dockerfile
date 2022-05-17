@@ -1,10 +1,12 @@
-FROM amazoncorretto:11-alpine
-ARG JAR_FILE=target/oauth-resource-server-*.jar
-ARG PROPERTIES_FILE=src/main/resources/application-prod.yml
+FROM adoptopenjdk:11-jre-hotspot as builder
+ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} application.jar
 
-COPY ${JAR_FILE} app.jar
-ADD ${PROPERTIES_FILE} /application.yml
+RUN java -Djarmode=layertools -jar application.jar extract
 
-ENTRYPOINT ["java" ,"-Djava.security.egd=file:/dev/./urandom","-Dspring.profiles.active=prod","-jar","app.jar"]
-EXPOSE 8084
-
+FROM adoptopenjdk:11-jre-hotspot
+COPY --from=builder dependencies/ ./
+COPY --from=builder snapshot-dependencies/ ./
+COPY --from=builder spring-boot-loader/ ./
+COPY --from=builder application/ ./
+ENTRYPOINT ["java", "-Dspring.profiles.active=prod", "org.springframework.boot.loader.JarLauncher"]
