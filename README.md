@@ -22,9 +22,9 @@ aws --profile scc  ecr-public get-login-password --region us-east-1 | docker log
 
 docker build -t resource-server .
 
-docker tag resource-server:latest 368372673222.dkr.ecr.eu-west-1.amazonaws.com/resource-server:latest
+docker tag resource-server:latest public.ecr.aws/r5r0j5k2/resource-server:latest
 
-docker push aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/r5r0j5k2
+docker push public.ecr.aws/r5r0j5k2/resource-server:latest
 
 
 
