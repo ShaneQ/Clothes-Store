@@ -20,15 +20,15 @@ management:
 spring:
   datasource:
     username: admin
-    password: TESTING
-    url: jdbc:mysql://scc.cxnse0qgwvdu.eu-west-1.rds.amazonaws.com:3306/resource
+    password: SomethingLong123!
+    url: jdbc:mysql://scc.cxnse0qgwvdu.eu-west-1.rds.amazonaws.com:3306/resource-local
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   flyway:
     url: jdbc:mysql://scc.cxnse0qgwvdu.eu-west-1.rds.amazonaws.com:3306
     schemas: resource-local
     user: admin
-    password: TESTING
+    password: SomethingLong123!
     enabled: true
 scc:
   bucket:
