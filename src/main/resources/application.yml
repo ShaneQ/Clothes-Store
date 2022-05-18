@@ -2,18 +2,8 @@ server:
   port: 8084
   servlet:
     context-path: /resource-server
-
-logging:
-  level:
-    org:
-      springframework:
-        security: DEBUG
-
-        spring:
-spring:
-  flyway:
-    enabled: false
----
+  tomcat:
+    max-threads: 20
 
 logging:
   level:
@@ -30,7 +20,7 @@ management:
 spring:
   datasource:
     username: admin
-    password: SomethingLong123!
+    password: ${DB_PASSWORD}
     url: jdbc:mysql://scc.cxnse0qgwvdu.eu-west-1.rds.amazonaws.com:3306/resource-local
     driver-class-name: com.mysql.cj.jdbc.Driver
 
@@ -38,7 +28,7 @@ spring:
     url: jdbc:mysql://scc.cxnse0qgwvdu.eu-west-1.rds.amazonaws.com:3306
     schemas: resource-local
     user: admin
-    password: SomethingLong123!
+    password: ${DB_PASSWORD}
     enabled: true
 scc:
   bucket:
