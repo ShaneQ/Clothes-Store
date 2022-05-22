@@ -8,4 +8,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 public interface IProductRepository extends PagingAndSortingRepository<Product, Long> {
 
     List<Product> findByDeletedFalseAndHiddenFalse();
+
+    List<Product> findByDeletedFalse();
+
 }

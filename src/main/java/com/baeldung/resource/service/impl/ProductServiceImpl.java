@@ -63,7 +63,7 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public List<Product> findAll() {
-        return repository.findByDeletedFalseAndHiddenFalse();
+        return repository.findByDeletedFalse();
     }
 
     @Override

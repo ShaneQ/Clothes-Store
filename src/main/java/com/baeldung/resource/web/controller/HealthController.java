@@ -1,6 +1,5 @@
 package com.baeldung.resource.web.controller;
 
-import javax.ws.rs.core.Response;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
