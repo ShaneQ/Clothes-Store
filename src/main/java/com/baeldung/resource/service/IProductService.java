@@ -13,9 +13,13 @@ public interface IProductService {
 
     Optional<Product> findById(Long id);
 
-    Product save(ProductDTO foo);
+    Product update(ProductDTO foo);
+
+    Product create(ProductDTO productDTO);
 
     Iterable<Product> findAll();
+
+    List<Product> findAllActive();
 
     void toggleHidden(Long id, boolean b);
 

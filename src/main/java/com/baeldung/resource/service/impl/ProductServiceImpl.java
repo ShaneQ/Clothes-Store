@@ -9,6 +9,7 @@ import com.baeldung.resource.service.IProductService;
 import com.baeldung.resource.web.dto.Filters;
 import com.baeldung.resource.web.dto.ProductDTO;
 import com.baeldung.resource.web.mappers.ProductDTOMapper;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -29,8 +30,9 @@ public class ProductServiceImpl implements IProductService {
         return repository.findById(id);
     }
 
+
     @Override
-    public Product save(ProductDTO productDTO) {
+    public Product update(ProductDTO productDTO) {
         Product entity = findById(productDTO.getId()).orElseThrow(() -> new ResourceNotFound("No Product found"));
         Product newEntity = ProductDTOMapper.toEntity(productDTO);
         List<ProductInventory> sizes = entity.getSizes();
@@ -45,8 +47,28 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
+    public Product create(ProductDTO productDTO) {
+        Product newEntity = ProductDTOMapper.toEntity(productDTO);
+        List<ProductInventory> sizes = new ArrayList<>();
+        newEntity.getSizes().forEach(size -> {
+            if (size.getId() == null) {
+                size.setStatus(ProductInventoryStatus.STORED.toString());
+                sizes.add(size);
+            }
+        });
+        newEntity.setSizes(sizes);
+        newEntity.setHidden(true);
+        return repository.save(newEntity);
+    }
+
+    @Override
     public List<Product> findAll() {
-        return repository.findByDeletedFalse();
+        return repository.findByDeletedFalseAndHiddenFalse();
+    }
+
+    @Override
+    public List<Product> findAllActive() {
+        return repository.findByDeletedFalseAndHiddenFalse();
     }
 
     @Override

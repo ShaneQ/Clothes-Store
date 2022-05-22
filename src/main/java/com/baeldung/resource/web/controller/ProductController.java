@@ -37,7 +37,7 @@ public class ProductController {
 
     @GetMapping
     public Collection<ProductDTO> findAll() {
-        Iterable<Product> products = this.productService.findAll();
+        Iterable<Product> products = this.productService.findAllActive();
         List<ProductDTO> dtos = new ArrayList<>();
         products.forEach(p -> dtos.add(ProductDTOMapper.convertToDto(p)));
         return dtos;

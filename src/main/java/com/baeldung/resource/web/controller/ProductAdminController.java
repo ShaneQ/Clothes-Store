@@ -35,7 +35,7 @@ public class ProductAdminController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public Long create(@RequestBody ProductDTO dto) {
-        Product savedProduct = this.productService.save(dto);
+        Product savedProduct = this.productService.create(dto);
 
         log.info("Product Created with id:{}", savedProduct.getId());
         return savedProduct.getId();
@@ -44,7 +44,7 @@ public class ProductAdminController {
     @ResponseStatus(HttpStatus.CREATED)
     @PutMapping
     public Long update(@RequestBody ProductDTO dto) {
-        Product savedProduct = this.productService.save(dto);
+        Product savedProduct = this.productService.update(dto);
 
         log.info("Product Updated with id:{}", savedProduct.getId());
         return savedProduct.getId();
