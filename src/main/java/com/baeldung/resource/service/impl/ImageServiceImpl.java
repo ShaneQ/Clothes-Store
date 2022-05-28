@@ -49,7 +49,7 @@ public class ImageServiceImpl implements imageService {
         metadata.put("Content-Type", file.getContentType());
         metadata.put("Content-Length", String.valueOf(file.getSize()));
         //Save Image in S3 and then save Todo in the database
-        UUID s3BucketFolder = UUID.randomUUID();
+        String s3BucketFolder = "images";
         String path = String.format("%s/%s", properties.getName(), s3BucketFolder);
         String fileName = String.format("%s", file.getOriginalFilename()).replace(" ","");
         try {
