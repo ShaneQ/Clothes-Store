@@ -41,7 +41,7 @@ public class UserBookingRequestController {
 
         BookingRequest savedEntity = this.service.save(dto, userGuid);
 
-        log.info("Booking Created with id:{}", savedEntity.getId());
+        log.info("Booking created with id:{}", savedEntity.getId());
     }
 
     @GetMapping("/api/private/bookings")

@@ -26,12 +26,16 @@ public class BookingRequestService {
 
     private final IProductService productService;
 
+    private final EmailService emailService;
+
     public BookingRequest save(BookingRequestDTO dto, UUID userId) {
         Product product = productService.findById(dto.getProductId())
                 .orElseThrow(() -> new ResourceNotFound("Product not found"));
         BookingRequest entity = BookingRequestDTOMapper.convertToEntity(dto, product);
         entity.setUser(User.builder().id(userId).build());
-        return repository.save(entity);
+        BookingRequest result = repository.save(entity);
+        emailService.sendEmailBookingAdmin(result.getId(), dto.getProductId(),dto.getProductName(), dto.getProductSize().getId(), dto.getStartDate());
+        return result;
     }
 
     public List<BookingRequest> findAllByUser(UUID userId, LocalDate fromDate) {

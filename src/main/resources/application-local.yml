@@ -19,6 +19,12 @@ scc:
     region: eu-west-1
     accessKey: AKIAVLRFY5LDOYEHXCWV
     secretKey: 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
+  email:
+    senderEmail: 2ndclosetclub@gmail.com
+    adminEmail: shanequaid@hotmail.com
+    region: eu-west-1
+    accessKey: TESTING
+    secretKey: TESTING
 
 ---
 keycloak-client:

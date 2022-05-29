@@ -19,7 +19,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -29,9 +28,11 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 @AllArgsConstructor
 public class ImageServiceImpl implements imageService {
+
     private final FileStore fileStore;
     private final IImageRepository repository;
     private SCCBucketProperties properties;
+
     public ImageDTO saveImage(MultipartFile file) {
         //check if the file is empty
         if (file.isEmpty()) {
@@ -51,14 +52,14 @@ public class ImageServiceImpl implements imageService {
         //Save Image in S3 and then save Todo in the database
         String s3BucketFolder = "images";
         String path = String.format("%s/%s", properties.getName(), s3BucketFolder);
-        String fileName = String.format("%s", file.getOriginalFilename()).replace(" ","");
+        String fileName = String.format("%s", file.getOriginalFilename()).replace(" ", "");
         try {
             fileStore.upload(path, fileName, Optional.of(metadata), file.getInputStream());
         } catch (IOException e) {
             throw new IllegalStateException("Failed to upload file", e);
         }
         Image todo = Image.builder()
-                .path(properties.getUrl()+"/"+s3BucketFolder+"/"+fileName )
+                .path(properties.getUrl() + "/" + s3BucketFolder + "/" + fileName)
                 .fileName(fileName)
                 .build();
         Image save = repository.save(todo);

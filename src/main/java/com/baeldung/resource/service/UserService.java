@@ -20,9 +20,11 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class UserService {
 
-    private IUserRepository repository;
+    private final IUserRepository repository;
 
-    private KeycloakService keycloakService;
+    private final KeycloakService keycloakService;
+
+    private final EmailService emailService;
 
     public User create(UserDTO dto, UUID userId) {
         User entity = UserDTOMapper.convertToEntity(dto, userId);
@@ -30,6 +32,7 @@ public class UserService {
 
         User user = repository.save(entity);
         keycloakService.addRole(userId, Role.SCC_USER_ROLE);
+        emailService.sendEmailActivatedAdmin(dto.getFirstName(), dto.getLastName(), dto.getEmail());
         return user;
     }
 
@@ -69,6 +72,7 @@ public class UserService {
                         log.error("Exception occurred when communicating with keycloak via the client", ex);
                         throw ex;
                     }
+                    emailService.sendEmailActivatedUser(user.getFirstName(), userId, user.getEmail());
                 }
                 break;
             case REQUESTED:
