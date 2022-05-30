@@ -6,5 +6,6 @@ public enum ProductInventoryStatus {
     WAITING_RETURN,
     STORED,
     WASH,
-    DEACTIVATED;
+    DEACTIVATED,
+    LATE_RETURN;
 }
