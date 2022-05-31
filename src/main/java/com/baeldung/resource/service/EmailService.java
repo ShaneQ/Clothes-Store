@@ -6,8 +6,9 @@ import com.amazonaws.services.simpleemail.model.Content;
 import com.amazonaws.services.simpleemail.model.Destination;
 import com.amazonaws.services.simpleemail.model.Message;
 import com.amazonaws.services.simpleemail.model.SendEmailRequest;
+import com.baeldung.resource.exceptions.ResourceNotFoundException;
+import com.baeldung.resource.persistence.model.BookingRequest;
 import com.baeldung.resource.spring.properties.SCCEmailProperties;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
@@ -75,7 +76,7 @@ public class EmailService {
                 "<body style=\"background: whitesmoke; padding: 30px; height: 100%\">\n" +
                 "<h5 style=\"font-size: 18px; margin-bottom: 6px\">Hey " + firstName + ",</h5>\n" +
                 "<p style=\"font-size: 16px; font-weight: 500\">Your Second Closet Club is now active. "
-                + "Click <a href=\"https://2ndclosetclub.com/shop\">here</a> to browse our wardrobe</p>\n"
+                + "Click <a href=\"https://www.2ndclosetclub.com/shop\">here</a> to browse our wardrobe</p>\n"
 
                 +
                 "</body>\n" +
@@ -99,7 +100,11 @@ public class EmailService {
         }
     }
 
-    public void sendEmailBookingAdmin(Long bookingId, Long productId, String productName, Long inventoryId, LocalDate startDate) {
+    public void sendEmailBookingAdmin(BookingRequest bookingRequest) {
+        String sizeName = bookingRequest.getProduct().getSizes().stream()
+                .filter(something -> something.getId().equals(bookingRequest.getProductInventory().getId())).findFirst()
+                .orElseThrow(() -> new ResourceNotFoundException("test"))
+                .getSize().getName();
         String emailContent = "<!DOCTYPE html>\n" +
                 "<html lang=\"en\">\n" +
                 "<head>\n" +
@@ -109,12 +114,15 @@ public class EmailService {
                 "</head>\n" +
                 "<body style=\"background: whitesmoke; padding: 30px; height: 100%\">\n" +
                 "<h5 style=\"font-size: 18px; margin-bottom: 6px\">Hey Iaina,</h5>\n" +
-                "<p style=\"font-size: 16px; font-weight: 500\">you just recieved a booking with the below information. "
+                "<p style=\"font-size: 16px; font-weight: 500\">You just received a booking with the below information. "
                 +
-                "<p>Booking Id: "+ bookingId+"</p>"+
-                "<p>Product Id: "+ productId+"</p>"+
-                "<p>Inventory Id: "+ inventoryId+"</p>"+
-                "<p>Start Date: "+ startDate.format(DateTimeFormatter.ISO_DATE)+"</p>"+
+                "<p>Booking Id: " + bookingRequest.getId() + "</p>" +
+                "<p>Booking Client Name: " + bookingRequest.getUser().getFullName() + "</p>" +
+                "<p>Product Id: " + bookingRequest.getProduct().getId() + "</p>" +
+                "<p>Product Name: " + bookingRequest.getProduct().getName() + "</p>" +
+                "<p>Product Size: " + sizeName + "</p>" +
+                "<p>Start Date: " + bookingRequest.getStartDate().format(DateTimeFormatter.ISO_DATE) + "</p>" +
+                "<p>Congrats, Love Shane!</p>" +
                 "</body>\n" +
                 "</html>";
 
@@ -130,9 +138,9 @@ public class EmailService {
                             .withSubject(new Content().withCharset("UTF-8").withData(emailSubject)))
                     .withSource(properties.getSenderEmail());
             client.sendEmail(sendEmailRequest);
-            log.info("Booking request email to Admin for booking id {}", bookingId);
+            log.info("Booking request email to Admin for booking id {}", bookingRequest.getId());
         } catch (Exception e) {
-            log.error("Failed to send email to Admin for booking id {}", bookingId, e);
+            log.error("Failed to send email to Admin for booking id {}", bookingRequest.getId(), e);
         }
     }
 }

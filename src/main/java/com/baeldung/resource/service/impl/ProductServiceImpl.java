@@ -1,6 +1,6 @@
 package com.baeldung.resource.service.impl;
 
-import com.baeldung.resource.exceptions.ResourceNotFound;
+import com.baeldung.resource.exceptions.ResourceNotFoundException;
 import com.baeldung.resource.persistence.model.Product;
 import com.baeldung.resource.persistence.model.ProductInventory;
 import com.baeldung.resource.persistence.model.ProductInventoryStatus;
@@ -33,7 +33,7 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public Product update(ProductDTO productDTO) {
-        Product entity = findById(productDTO.getId()).orElseThrow(() -> new ResourceNotFound("No Product found"));
+        Product entity = findById(productDTO.getId()).orElseThrow(() -> new ResourceNotFoundException("No Product found"));
         Product newEntity = ProductDTOMapper.toEntity(productDTO);
         List<ProductInventory> sizes = entity.getSizes();
         newEntity.getSizes().forEach(size -> {
@@ -103,7 +103,7 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public void updateInventoryStatus(Long productId, Long inventoryId, ProductInventoryStatus status) {
         Product product = repository.findById(productId)
-                .orElseThrow(() -> new ResourceNotFound("Product not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
         product.getSizes().forEach(size -> {
                     if (size.getId().equals(inventoryId)) {
                         size.setStatus(status.name());

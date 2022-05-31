@@ -2,7 +2,7 @@ package com.baeldung.resource.service;
 
 import static com.baeldung.resource.persistence.model.User.Status.REQUESTED;
 
-import com.baeldung.resource.exceptions.ResourceNotFound;
+import com.baeldung.resource.exceptions.ResourceNotFoundException;
 import com.baeldung.resource.persistence.model.User;
 import com.baeldung.resource.persistence.repository.IUserRepository;
 import com.baeldung.resource.web.dto.KeycloakUserInfo;
@@ -48,7 +48,7 @@ public class UserService {
 
     public User get(UUID id) {
         return repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFound("No Personal Info found"));
+                .orElseThrow(() -> new ResourceNotFoundException("No Personal Info found"));
     }
 
     public Iterable<User> findAll() {

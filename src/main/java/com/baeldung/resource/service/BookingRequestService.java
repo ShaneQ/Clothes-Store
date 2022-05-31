@@ -1,6 +1,6 @@
 package com.baeldung.resource.service;
 
-import com.baeldung.resource.exceptions.ResourceNotFound;
+import com.baeldung.resource.exceptions.ResourceNotFoundException;
 import com.baeldung.resource.persistence.model.BookingRequest;
 import com.baeldung.resource.persistence.model.BookingRequest.Status;
 import com.baeldung.resource.persistence.model.Product;
@@ -26,15 +26,17 @@ public class BookingRequestService {
 
     private final IProductService productService;
 
+    private final UserService userService;
+
     private final EmailService emailService;
 
     public BookingRequest save(BookingRequestDTO dto, UUID userId) {
         Product product = productService.findById(dto.getProductId())
-                .orElseThrow(() -> new ResourceNotFound("Product not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
         BookingRequest entity = BookingRequestDTOMapper.convertToEntity(dto, product);
-        entity.setUser(User.builder().id(userId).build());
+        entity.setUser(userService.get(userId));
         BookingRequest result = repository.save(entity);
-        emailService.sendEmailBookingAdmin(result.getId(), dto.getProductId(),dto.getProductName(), dto.getProductSize().getId(), dto.getStartDate());
+        emailService.sendEmailBookingAdmin(result);
         return result;
     }
 
