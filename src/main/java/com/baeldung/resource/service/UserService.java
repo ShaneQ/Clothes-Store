@@ -32,7 +32,7 @@ public class UserService {
 
         User user = repository.save(entity);
         keycloakService.addRole(userId, Role.SCC_USER_ROLE);
-        emailService.sendEmailActivatedAdmin(dto.getFirstName(), dto.getLastName(), dto.getEmail());
+        emailService.sendEmailActivatedAdmin(user.getFullName(), dto.getEmail());
         return user;
     }
 

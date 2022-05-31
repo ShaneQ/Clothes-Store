@@ -92,6 +92,13 @@
             <version>3.12.0</version>
         </dependency>
 
+        <!-- email -->
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
         <!-- test -->
 
         <dependency>

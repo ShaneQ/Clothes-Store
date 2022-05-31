@@ -1,5 +1,7 @@
 package com.baeldung.resource.service;
 
+import static org.apache.commons.codec.CharEncoding.UTF_8;
+
 import com.amazonaws.services.simpleemail.AmazonSimpleEmailService;
 import com.amazonaws.services.simpleemail.model.Body;
 import com.amazonaws.services.simpleemail.model.Content;
@@ -10,9 +12,13 @@ import com.baeldung.resource.exceptions.ResourceNotFoundException;
 import com.baeldung.resource.persistence.model.BookingRequest;
 import com.baeldung.resource.spring.properties.SCCEmailProperties;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring5.SpringTemplateEngine;
 
 @Slf4j
 @Component
@@ -22,29 +28,20 @@ public class EmailService {
 
     private SCCEmailProperties properties;
 
+    private SpringTemplateEngine templateEngine;
+
     public EmailService(AmazonSimpleEmailService client,
-            SCCEmailProperties properties) {
+            SCCEmailProperties properties, SpringTemplateEngine templateEngine) {
         this.client = client;
         this.properties = properties;
+        this.templateEngine = templateEngine;
     }
 
-    public void sendEmailActivatedAdmin(String firstName, String lastName, String email) {
-
-        String emailContent = "<!DOCTYPE html>\n" +
-                "<html lang=\"en\">\n" +
-                "<head>\n" +
-                "    <meta charset=\"utf-8\">\n" +
-                "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n" +
-                "    <title>User Registered</title>\n" +
-                "</head>\n" +
-                "<body style=\"background: whitesmoke; padding: 30px; height: 100%\">\n" +
-                "<h5 style=\"font-size: 18px; margin-bottom: 6px\">Hey Iaina,</h5>\n" +
-                "<p style=\"font-size: 16px; font-weight: 500\">A new user has registered with the below details</p>\n"
-                +
-                "<p>Name " + firstName + " " + lastName + "</p>\n" +
-                "<p>Email " + email + "</p>\n" +
-                "</body>\n" +
-                "</html>";
+    public void sendEmailActivatedAdmin(String fullName, String email) {
+        Map<String, Object> props = new HashMap<>();
+        props.put("name", fullName);
+        props.put("email", email);
+        String html = getTemplateHtml(props, "admin/new-user-register");
 
         String emailSubject = "SCC User has registered";
 
@@ -54,8 +51,8 @@ public class EmailService {
                             new Destination().withToAddresses(properties.getAdminEmail()))
                     .withMessage(new Message()
                             .withBody(new Body().withHtml(
-                                    new Content().withCharset("UTF-8").withData(emailContent)))
-                            .withSubject(new Content().withCharset("UTF-8").withData(emailSubject)))
+                                    new Content().withCharset(UTF_8).withData(html)))
+                            .withSubject(new Content().withCharset(UTF_8).withData(emailSubject)))
                     .withSource(properties.getSenderEmail());
             client.sendEmail(sendEmailRequest);
             log.info("Registration email sent to admin");
@@ -64,25 +61,18 @@ public class EmailService {
         }
     }
 
+    private String getTemplateHtml(Map<String, Object> props, String template) {
+        Context context = new Context();
+        context.setVariables(props);
+        return templateEngine.process(template, context);
+    }
+
     public void sendEmailActivatedUser(String firstName, UUID userId, String email) {
 
-        String emailContent = "<!DOCTYPE html>\n" +
-                "<html lang=\"en\">\n" +
-                "<head>\n" +
-                "    <meta charset=\"utf-8\">\n" +
-                "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n" +
-                "    <title>Registration Complete</title>\n" +
-                "</head>\n" +
-                "<body style=\"background: whitesmoke; padding: 30px; height: 100%\">\n" +
-                "<h5 style=\"font-size: 18px; margin-bottom: 6px\">Hey " + firstName + ",</h5>\n" +
-                "<p style=\"font-size: 16px; font-weight: 500\">Your Second Closet Club is now active. "
-                + "Click <a href=\"https://www.2ndclosetclub.com/shop\">here</a> to browse our wardrobe</p>\n"
-
-                +
-                "</body>\n" +
-                "</html>";
-
         String emailSubject = "Welcome to the 2nd Closet Club";
+        Map<String, Object> props = new HashMap<>();
+        props.put("name", firstName);
+        String html = getTemplateHtml(props, "public/new-user-activation");
 
         try {
             SendEmailRequest sendEmailRequest = new SendEmailRequest()
@@ -90,8 +80,8 @@ public class EmailService {
                             new Destination().withToAddresses(email))
                     .withMessage(new Message()
                             .withBody(new Body().withHtml(
-                                    new Content().withCharset("UTF-8").withData(emailContent)))
-                            .withSubject(new Content().withCharset("UTF-8").withData(emailSubject)))
+                                    new Content().withCharset(UTF_8).withData(html)))
+                            .withSubject(new Content().withCharset(UTF_8).withData(emailSubject)))
                     .withSource(properties.getSenderEmail());
             client.sendEmail(sendEmailRequest);
             log.info("User Activation email sent to {}", userId);
@@ -105,28 +95,16 @@ public class EmailService {
                 .filter(something -> something.getId().equals(bookingRequest.getProductInventory().getId())).findFirst()
                 .orElseThrow(() -> new ResourceNotFoundException("test"))
                 .getSize().getName();
-        String emailContent = "<!DOCTYPE html>\n" +
-                "<html lang=\"en\">\n" +
-                "<head>\n" +
-                "    <meta charset=\"utf-8\">\n" +
-                "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n" +
-                "    <title>Registration Complete</title>\n" +
-                "</head>\n" +
-                "<body style=\"background: whitesmoke; padding: 30px; height: 100%\">\n" +
-                "<h5 style=\"font-size: 18px; margin-bottom: 6px\">Hey Iaina,</h5>\n" +
-                "<p style=\"font-size: 16px; font-weight: 500\">You just received a booking with the below information. "
-                +
-                "<p>Booking Id: " + bookingRequest.getId() + "</p>" +
-                "<p>Booking Client Name: " + bookingRequest.getUser().getFullName() + "</p>" +
-                "<p>Product Id: " + bookingRequest.getProduct().getId() + "</p>" +
-                "<p>Product Name: " + bookingRequest.getProduct().getName() + "</p>" +
-                "<p>Product Size: " + sizeName + "</p>" +
-                "<p>Start Date: " + bookingRequest.getStartDate().format(DateTimeFormatter.ISO_DATE) + "</p>" +
-                "<p>Congrats, Love Shane!</p>" +
-                "</body>\n" +
-                "</html>";
+        Map<String, Object> props = new HashMap<>();
+        props.put("bookingId", bookingRequest.getId());
+        props.put("fullName", bookingRequest.getUser().getFullName());
+        props.put("productId", bookingRequest.getProduct().getId());
+        props.put("productName", bookingRequest.getProduct().getName());
+        props.put("productSize", sizeName);
+        props.put("bookingStartDate", bookingRequest.getStartDate().format(DateTimeFormatter.ISO_DATE));
 
-        String emailSubject = "New Booking";
+        String html = getTemplateHtml(props, "admin/new-booking-request");
+        String emailSubject = "New Booking Request";
 
         try {
             SendEmailRequest sendEmailRequest = new SendEmailRequest()
@@ -134,8 +112,8 @@ public class EmailService {
                             new Destination().withToAddresses(properties.getAdminEmail()))
                     .withMessage(new Message()
                             .withBody(new Body().withHtml(
-                                    new Content().withCharset("UTF-8").withData(emailContent)))
-                            .withSubject(new Content().withCharset("UTF-8").withData(emailSubject)))
+                                    new Content().withCharset(UTF_8).withData(html)))
+                            .withSubject(new Content().withCharset(UTF_8).withData(emailSubject)))
                     .withSource(properties.getSenderEmail());
             client.sendEmail(sendEmailRequest);
             log.info("Booking request email to Admin for booking id {}", bookingRequest.getId());
