@@ -15,27 +15,22 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
 @Slf4j
+@AllArgsConstructor
 @Component
 public class EmailService {
 
-    private AmazonSimpleEmailService client;
+    private final AmazonSimpleEmailService client;
 
-    private SCCEmailProperties properties;
+    private final SCCEmailProperties properties;
 
-    private SpringTemplateEngine templateEngine;
-
-    public EmailService(AmazonSimpleEmailService client,
-            SCCEmailProperties properties, SpringTemplateEngine templateEngine) {
-        this.client = client;
-        this.properties = properties;
-        this.templateEngine = templateEngine;
-    }
+    private final SpringTemplateEngine templateEngine;
 
     public void sendEmailActivatedAdmin(String fullName, String email) {
         Map<String, Object> props = new HashMap<>();
