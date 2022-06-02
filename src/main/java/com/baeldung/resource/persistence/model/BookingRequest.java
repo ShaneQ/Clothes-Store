@@ -52,7 +52,8 @@ public class BookingRequest {
         WAITING_COLLECTION,
         ACTIVE,
         WAITING_RETURN,
-        COMPLETE;
+        COMPLETE,
+        LATE_RETURN;
     }
 }
 
