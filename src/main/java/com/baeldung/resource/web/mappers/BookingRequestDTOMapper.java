@@ -27,7 +27,7 @@ public class BookingRequestDTOMapper {
         return BookingRequestDTO.builder()
                 .id(entity.getId())
                 .productId(entity.getProductInventory().getId_product())
-                .productSize(ProductSizeDTO.builder().id(entity.getProductInventory().getSize().getId())
+                .productSize(ProductSizeDTO.builder().id(entity.getProductInventory().getId())
                         .id_size(entity.getProductInventory().getSize().getId()).status(ProductInventoryStatus.valueOf(entity.getProductInventory().getStatus())).build())
                 .startDate(entity.getStartDate())
                 .returnDate(returnDate)
