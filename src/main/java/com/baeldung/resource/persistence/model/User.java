@@ -38,6 +38,8 @@ public class User {
     private String addressLineTwo;
     private LocalDate startDate;
     private LocalDate endDate;
+    private LocalDate createdAt;
+
     private int membership;
 
     @Enumerated(EnumType.STRING)

@@ -50,6 +50,7 @@ public class UserDTOMapper {
                 .endDate(entity.getEndDate())
                 .bookingAllowanceMonthly(bookingAllowanceMonthly)
                 .bookingAllowanceRemainingMonthly(bookingAllowanceRemainingMonthly)
+                .createdAt(entity.getCreatedAt())
                 .build();
     }
 }

@@ -20,6 +20,8 @@ public class UserDTO {
     private String phone;
     private String email;
     private Date dateOfBirth;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+    private LocalDate createdAt;
     private String country;
     private String city;
     private String eirCode;
