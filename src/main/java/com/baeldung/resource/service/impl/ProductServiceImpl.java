@@ -91,7 +91,7 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public List<Product> findAllWithFilters(Map<String, String> filters) {
-        return findAll().stream()
+        return findAllActive().stream()
                 .filter(product -> Filters.filterBySize(product, filters))
                 .filter(product -> Filters.filterByColor(product, filters))
                 .filter(product -> Filters.filterBySeason(product, filters))
