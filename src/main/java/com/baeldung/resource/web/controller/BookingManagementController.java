@@ -26,6 +26,7 @@ public class BookingManagementController {
 
     @GetMapping("/bookings")
     public Collection<BookingRequestDTO> findAll() {
+        //this is a test comment can delete
         Iterable<BookingRequest> entities = this.service.findAll();
         List<BookingRequestDTO> dtos = new ArrayList<>();
         entities.forEach(p -> dtos.add(BookingRequestDTOMapper.convertToDto(p)));
